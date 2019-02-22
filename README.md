@@ -28,11 +28,7 @@ git clone "https:/github.com/imuncle/gitblog"
 ### 申请GitHub OAuth APP
 点击[这里](https://github.com/settings/applications/new)申请。
 
-注意申请时的**callback URL**一定要填写正确。如果你没有服务器的话可以直接填写http://119.23.8.25/gh-oauth-server.php ，因为访问用户的access_token必须通过服务端访问，详情可见[这篇文章](https://imuncle.github.io/content.html?id=22)。
-
-服务端使用PHP编写，只负责请求用户的access_token，不会存储任何数据。详见源代码（在本仓库的**server**文件夹里）。
-
-如果你有服务器，那么你可以使用该PHP代码自己配置服务端，将**callback URL**写为自己的服务端地址。
+注意申请时的**callback URL**一定要填写正确。一般就写自己网站的首页就行，比如https://imuncle.github.io 。
 
 申请完毕后会拿到对应的唯一的**client_id**和**client_secret**，这两个字符串在后面的配置中会使用到。
 
@@ -65,8 +61,12 @@ client_id|填写你申请OAuth APP时拿到的client_id
 client_secret|填写你申请OAuth APP时拿到的client_secret
 title|填写你的个人网站的标题
 instruction|填写你的个人网站的简介
-server_link|填写你的服务端链接，若没有服务器可填写'http://119.23.8.25/gh-oauth-server.php'
+server_link|填写你的服务端地址，若没有服务器可填写'http://119.23.8.25/gh-oauth-server.php'
 friends|填写你的网站的友链，若没有则不填写
+
+上面的server_link是服务端的地址，，因为访问用户的access_token必须通过服务端访问，详情可见[这篇文章](https://imuncle.github.io/content.html?id=22)。这个服务端使用PHP编写，只负责请求用户的access_token，不会存储任何数据。详见源代码（在本仓库的**server**文件夹里）。
+
+如果你有服务器，那么你可以使用该PHP代码自己配置服务端，将**server_link**写为自己的服务端地址。
 
 ### 动态打字配置
 网站首页有一个动态打字的效果，这里参考的是[type.js](https://github.com/mattboldt/typed.js)项目，配置地方在**index.html**中。
