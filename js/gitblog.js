@@ -287,7 +287,7 @@ function GetMenu() {
             }
         },
     });
-    document.getElementById("footer").innerHTML += 'Power By <a href="https://github.com/imuncle/gitblog" target="_blank" style="color: aquamarine">gitblog</a>';
+    document.getElementById("footer").innerHTML += 'Powered by <a href="https://github.com/imuncle/gitblog" target="_blank" style="color: aquamarine;text-decoration:none;border-bottom: 1px solid #79f8d4;">gitblog</a>';
 }
 
 // 获取每一页的issue内容
