@@ -1,5 +1,6 @@
 # gitblog
 这是一个极轻量级的，基于git issue的个人博客模板，非常适合于想在GitHub pages上搭建个人博客的人。
+
 示例页面：[大叔的个人小站](https://imuncle.github.io)
 
 ## 现有功能
@@ -27,9 +28,9 @@ git clone "https:/github.com/imuncle/gitblog"
 ### 申请GitHub OAuth APP
 点击[这里](https://github.com/settings/applications/new)申请。
 
-注意申请时的**callback URL**一定要填写正确。如果你没有服务器的话可以直接填写"http://119.23.8.25/gh-oauth-server.php"，因为访问用户的access_token必须通过服务端访问，详情可见[这篇文章](https://imuncle.github.io/content.html?id=22)。
+注意申请时的**callback URL**一定要填写正确。如果你没有服务器的话可以直接填写http://119.23.8.25/gh-oauth-server.php ，因为访问用户的access_token必须通过服务端访问，详情可见[这篇文章](https://imuncle.github.io/content.html?id=22)。
 
-服务端使用PHP编写，只负责请求用户的access_token，除了对应的OAuth APP的client_id和client_secret外，不会存储其他任何数据。详见源代码（在本仓库的**server**文件夹里）。
+服务端使用PHP编写，只负责请求用户的access_token，不会存储任何数据。详见源代码（在本仓库的**server**文件夹里）。
 
 如果你有服务器，那么你可以使用该PHP代码自己配置服务端，将**callback URL**写为自己的服务端地址。
 
@@ -87,6 +88,7 @@ $("#changerificwordspanid").typed({
 图片全部都存储在**images**文件夹中。
 
 图片名称|含义
+:--:|:--:
 404.png|404页面
 avatar.jpg|网站图标
 fish.png|404页面
