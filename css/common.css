@@ -1,0 +1,119 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif; /*使用无衬线字体*/
+}
+a, img {
+    -webkit-touch-callout: none; /*禁止长按链接与图片弹出菜单*/
+}
+/*html, body {
+    -webkit-user-select: none;
+    user-select: none;
+}*/
+button,input,optgroup,select,textarea {
+    -webkit-appearance:none; /*去掉webkit默认的表单样式*/
+}
+a,button,input,optgroup,select,textarea {
+    -webkit-tap-highlight-color:rgba(0,0,0,0); /*去掉a、input和button点击时的蓝色外边框和灰色半透明背景*/
+}
+input::-webkit-input-placeholder {
+    color:#ccc; /*修改webkit中input的planceholder样式*/
+}
+input:focus::-webkit-input-placeholder {
+    color:#f00; /*修改webkit中focus状态下input的planceholder样式*/
+}
+body {
+    -webkit-text-size-adjust: 100%!important; /*禁止IOS调整字体大小*/
+}
+input::-webkit-input-speech-button {
+display: none; /*隐藏Android的语音输入按钮*/
+}
+
+.footer {
+    background: #2c3e50;
+    padding: 50px 15px;
+}
+.navi-button {
+    font-size: .8rem;
+    color: #7f8c8d;
+    border: 1px solid rgba(127,140,141,0.6);
+    line-height: 35px;
+    border-radius: 4px;
+    display: block;
+    padding: 0 15px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+    z-index: 99;
+    transition: all .3s;
+}
+.main-navication li {
+    list-style: none;
+    padding-left: 10px;
+}
+.main {
+  transform: translateX(0);
+  transition: all 0.4s;
+}
+.main-navication {
+    margin: 0;
+    padding: 100px 0 0;
+    background: #2c3e50;
+    width: 150px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity:0;
+    transition: all 0.4s;
+}
+.main-navication a {
+    display: block;
+    padding: 0 15px;
+    color: white;
+    text-decoration: none;
+}
+.main-navication span {
+    font-size: 12px;
+    line-height: 48px;
+    display: block;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.4s;
+}
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+ul.pagination li {display: inline;}
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border:transparent;
+}
+ul.pagination li a.active {
+    background-color: #ddd;
+    color: white;
+    pointer-events:none;
+}
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+.post-tags {
+margin-top: 40px;
+text-align: center;
+}
+.post-tags a {
+display: inline-block;
+margin-right: 10px;
+font-size: 13px;
+overflow-wrap: break-word;
+word-wrap: break-word;
+background-color: transparent;
+color: #555;
+text-decoration: none;
+outline: none;
+border-bottom: 1px solid #999;
+cursor: pointer;
+}

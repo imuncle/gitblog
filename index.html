@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="google-site-verification" content="4T3DT1L7LoqmCrr4QoTb1PBVO4TNI0BHrjIWNOddJYE" />
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="icon" href="images/avatar.jpg">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/home.css">
+  </head>
+  <body>
+    <ul class="main-navication">
+      <ul id="menu"></ul>
+      <hr>
+      <ul id="friends">
+        <li><a><span style="color: white;transform:translateX(4px)">友链：</span></a></li>
+        <li>
+          <a href="https://greedbob.github.io" target="_blank"><span>Bo</span></a>
+        </li>
+        <li>
+          <a href="https://hitszqmaker.github.io" target="_blank"><span>Qmaker</span></a>
+        </li>
+      </ul>
+    </ul>
+    
+    <div class="main">
+      <div class="page_header" >
+        <label class="navi-button">MENU</label>
+      </div>
+      <div class="author">
+        <div class="head">
+          <img src="images/avatar.jpg" class="img-responsive img-circle">
+        </div>
+        <h3 class="name" id="title"></h3>
+        <p class="name" id="instruction"></p>
+        <p class="name">I am <text id="changerificwordspanid"></text> today!</p>
+      </div>
+      
+      <div class="container">
+        <ul id="issue-list" class="main_content" style="padding-left: 0px; opacity: 1; transform: translateY(0px);">
+          <br>
+          <h4 class="title">内容加载中...</h4>
+          </br>
+        </ul>
+        <div style="text-align: center">
+          <ul class="pagination" id="pages" style="display: none"></ul>
+        </div>
+      </div>
+      <div class="footer" style="position:relative;text-align: center">
+          <a href="https://github.com/imuncle" title="Github" target="_blank"><img src="images/github.svg" style="width:50px;margin-left:10px;margin-right:10px"></a>
+          <img src="images/wechart.svg" title="WeChart" onmouseover="WeChart('show')" onmouseout="WeChart('hide')" style="width:50px;cursor:pointer;margin-left:10px;margin-right:10px">
+          <img id="wechart-qrcode" src="images/wechart-qrcode.jpg" style="width:130px;position:absolute;left:calc(50% - 28px);top:-110px;transform:translateY(-20px);opacity:0;display:none;transition: all .3s;box-shadow: 0 0 5px #95a5a6;">
+      </div>
+      <div id="footer" style="text-align: center;background: #2c3e50;padding-bottom: 10px;color: aquamarine"></div>
+    </div>
+  </body>
+  <script src = "js/jquery.min.js"></script>
+  <script src = "js/typed.js"></script>
+  <script src = "js/gitblog.js"></script>
+  <script>
+      $(function(){ 
+      　$('.head').css("opacity","1");
+        $('.head').css("transform","translateY(0)");
+        $('.name').css("opacity","1");
+        $('.name').css("transform","translateY(0)");
+        $('.main_content').css("opacity","1");
+        $('.main_content').css("transform","translateY(0)");
+        
+        $("#changerificwordspanid").typed({
+          strings: ["good", "happy", "healthy", "tall"],
+          typeSpeed: 100,
+          startDelay: 10,
+          showCursor: true,
+          shuffle: true,
+          loop:true
+        });
+      });
+      issueListPage();
+    </script>
+</html>

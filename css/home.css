@@ -1,0 +1,124 @@
+.page_header{
+  width:100%;
+  height:70vh;
+  position: relative;
+  background:url('../images/page_background.jpg') no-repeat 5% 60%;
+}
+.navi-button {
+    font-size: .8rem;
+    color: #7f8c8d;
+    border: 1px solid rgba(127,140,141,0.6);
+    line-height: 35px;
+    border-radius: 4px;
+    display: block;
+    padding: 0 15px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+    z-index: 99;
+    transition: all .3s;
+}
+.author {
+    background: #ecf0f1;
+    text-align: center;
+    height:30vh;
+}
+.head {
+    display: inline-block;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    padding: 3px;
+    background: #fff;
+    box-shadow: 0 0 5px #95a5a6;
+    position: relative;
+    top: -68px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.8s;
+}
+.name {
+  top: -68px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.8s;
+}
+
+
+.pagination {
+    margin-bottom: 80px;
+    padding-left: 0;
+}
+
+body {
+  background: #2c3e50;
+}
+.main_content {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.8s;
+  margin: 72px auto 0 auto;
+  padding: 0 36px;
+  list-style: none;
+}
+.main_content>li {
+  margin-bottom: 20px;
+}
+.main {
+  width:100%;
+  background:#ffffff;
+}
+.main_content>li p.date, .main_content>li h4.title {
+    font-weight: bold;
+}
+.main_content>li h4.title {
+    line-height: 1.5;
+    margin: 10px 0;
+}
+.main_content>li h4.title a {
+    color: #2c3e50;
+    transition: color .3s;
+}
+a {
+    text-decoration: none;
+    color: #34495e;
+}
+.main_content>li .excerpt, .main_content>li .excerpt *, .main_content>li .no-title {
+    font-size: .9rem;
+    color: #7f8c8d;
+    line-height: 1.5;
+    margin: 0;
+}
+.main_content>li .meta {
+    margin-top: 20px;
+    border: 1px solid #ecf0f1;
+    border-width: 1px 0;
+    padding: 22px 10px;
+    font-size: .75rem;
+    color: #7f8c8d;
+}
+.main_content>li .meta>li {
+    margin-right: 22px;
+    display: inline-block;
+}
+.main_content li > p {
+  margin:0;
+}
+.main_content a {
+  text-decoration: none;
+  color: #34495e;
+}
+.issue{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+html, body {
+  -webkit-user-select: none;
+  user-select: none;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="icon" href="images/avatar.jpg">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/gitment.css">
+  </head>
+  <body>
+    <ul class="main-navication">
+      <ul id="menu"></ul>
+      <hr>
+      <ul id="friends"></ul>
+    </ul>
+    <div class="main">
+      <label class="navi-button">MENU</label>
+      <div class="jumbotron" style="text-align: center;background-color:#ecf0f1;margin-bottom:0;">
+        <h1 id="title"></h1>
+        <br>
+        <text id="instruction"></text>
+      </div>
+      <div style="width:100%;background-color:#ffffff">
+        <div class="container">
+          <div id="content" class="gitment-markdown" style="margin-top:50px;margin-bottom: 50px">内容加载中...</div>
+          <div class="post-tags" id="labels"></div>
+          <hr>
+          <div lang="zh-CN" class="gitment-container gitment-header-container">
+            <span><strong id="comments-num"></strong> 条评论</span>
+          </div>
+          <div lang="zh-CN" class="gitment-container gitment-comments-container">
+            <ul class="gitment-comments-list" id="comment-list"></ul>
+          </div>
+          <div style="text-align: center">
+            <ul class="pagination" id="pages" style="display: none"></ul>
+          </div>
+          <div style="text-align:left">
+            <div lang="zh-CN" class="gitment-container gitment-editor-container">
+              <div id="avatar"></div>
+              <div class="gitment-editor-main">
+                <div class="gitment-editor-header">
+                  <nav class="gitment-editor-tabs">
+                    <button class="gitment-editor-tab gitment-selected" onclick="editComment()" id="editComment">评论</button>
+                    <button class="gitment-editor-tab" onclick="preview()" id="preview">预览</button>
+                  </nav>
+                  <div class="gitment-editor-login" id='login'></div>
+                </div>
+                <div class="gitment-editor-body">
+                  <div class="gitment-editor-write-field" id="write-field">
+                    <textarea placeholder="(发表评论)" title="请登入以发表评论" disabled id="comment-input"></textarea>
+                  </div>
+                  <div class="gitment-editor-preview-field gitment-hidden">
+                    <div class="gitment-editor-preview gitment-markdown" id="preview-content">（没有预览）</div>
+                  </div>
+                </div>
+              </div>
+              <div class="gitment-editor-footer">
+                <a class="gitment-editor-footer-tip" href="https://guides.github.com/features/mastering-markdown/" target="_blank">
+                  支持 Markdown 语法
+                </a>
+                <button class="gitment-editor-submit" disabled onclick="comment()">发送</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer" style="position:relative;text-align: center">
+          <a href="https://github.com/imuncle" title="Github" target="_blank"><img src="images/github.svg" style="width:50px;margin-left:10px;margin-right:10px"></a>
+          <img src="images/wechart.svg" title="WeChart" onmouseover="WeChart('show')" onmouseout="WeChart('hide')" style="width:50px;cursor:pointer;margin-left:10px;margin-right:10px">
+          <img id="wechart-qrcode" src="images/wechart-qrcode.jpg" style="width:135px;position:absolute;left:calc(50% - 28px);top:-110px;transform:translateY(-20px);opacity:0;display:none;transition: all .3s;box-shadow: 0 0 5px #95a5a6;">
+      </div>
+      <div id="footer" style="text-align: center;background: #2c3e50;padding-bottom: 10px;color: aquamarine"></div>
+    </div>
+  </body>
+  <script src = "js/jquery.min.js"></script>
+  <script src="js/gitblog.js"></script>
+  <script>
+    articlePage();
+  </script>
+</html>
