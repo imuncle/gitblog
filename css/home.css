@@ -118,7 +118,3 @@ a {
   -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
 }
-html, body {
-  -webkit-user-select: none;
-  user-select: none;
-}

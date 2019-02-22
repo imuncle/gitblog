@@ -4,10 +4,6 @@ body {
 a, img {
     -webkit-touch-callout: none; /*禁止长按链接与图片弹出菜单*/
 }
-/*html, body {
-    -webkit-user-select: none;
-    user-select: none;
-}*/
 button,input,optgroup,select,textarea {
     -webkit-appearance:none; /*去掉webkit默认的表单样式*/
 }
