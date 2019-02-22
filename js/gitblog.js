@@ -85,7 +85,7 @@ function articlePage() {
         url : 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues/'+id,
         success : function(data) {
             document.getElementById('title').innerHTML = data.title;
-            document.getElementsByTagName("title")[0].innerText = data.title+"-大叔的小站";
+            document.getElementsByTagName("title")[0].innerText = data.title+"-"+config.title;
             document.getElementById('content').innerHTML = data.body_html;
             var labels = document.getElementById('labels');
             for(var i=0;i<data.labels.length;i++) {
