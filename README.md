@@ -3,8 +3,13 @@
 
 示例页面：[大叔的个人小站](https://imuncle.github.io)
 
+[English](README_en.md)
+
 ## 现有功能
-本博客具有发表文章，文章评论，文章、评论分页，文章设置标签等基本功能。
+- [x] 发表文章
+- [x] 文章评论
+- [x] 文章、评论分页
+- [x] 文章设置标签
 
 博客本身没有发表文章的接口，而是在GitHub的issue页面直接new issue。
 
@@ -108,4 +113,4 @@ wechart.svg|微信图标
 - 暂未封装API
 
 ## 协议
-MIT LISENCE
+MIT LICENSE
