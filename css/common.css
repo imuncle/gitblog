@@ -32,7 +32,7 @@ display: none; /*隐藏Android的语音输入按钮*/
     border-radius: 4px;
     display: block;
     padding: 0 15px;
-    position: absolute;
+    position: fixed;
     right: 15px;
     top: 15px;
     cursor: pointer;
@@ -53,7 +53,7 @@ display: none; /*隐藏Android的语音输入按钮*/
     padding: 100px 0 0;
     background: #2c3e50;
     width: 150px;
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     bottom: 0;
@@ -109,4 +109,16 @@ text-decoration: none;
 outline: none;
 border-bottom: 1px solid #999;
 cursor: pointer;
+}
+.Totop {
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    display: block;
+    width: 42px;
+    height: 42px;
+    opacity: 0;
+    cursor: pointer;
+    transform: translateY(0px);
+    transition: all 0.4s;
 }

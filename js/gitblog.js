@@ -47,12 +47,22 @@ $('.navi-button').click(function(){
         $('.main-navication span').css("opacity","1");
         $('.main-navication').css("opacity","1");
         $('.main-navication span').css("transform","translateX(-10px)");
+        $('.navi-button').css("transform","translateX(-150px)");
+        $('.Totop').css("transform","translateX(-150px)");
     }else {
         $('.main').css("transform","translateX(0)");
         $('.main-navication span').css("opacity","0");
         $('.main-navication').css("opacity","0");
         $('.main-navication span').css("transform","translateX(-50px)");
+        $('.navi-button').css("transform","translateX(0px)");
+        $('.Totop').css("transform","translateX(0px)");
     }
+});
+
+$('.Totop').click(function() {
+    $('html,body').animate(
+        { scrollTop: '0px' }, 600
+    );
 });
 
 function WeChart(command)
@@ -73,8 +83,11 @@ function articlePage() {
     var id = getUrlParam('id');
     var token = getUrlParam('access_token');
     if(token != undefined) {
+        window.localStorage.clear();
         window.localStorage.setItem("access_token",token);
-        window.location.href = window.location.origin + window.location.pathname + "?id="+id;
+        if(window.localStorage.access_token != undefined) {
+            window.location.href = window.location.origin + window.location.pathname + "?id="+id;
+        }
     }
     getPageNum('https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues/'+id+'/comments');
     $.ajax({
