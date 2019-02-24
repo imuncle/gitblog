@@ -152,7 +152,7 @@ function commentListInit(num, issue_id) {
         url:'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues/'+issue_id+'/comments?page='+page+'&per_page=10',
         success : function(data) {
             for(var i=0;i<data.length;i++) {
-                data[i].created_at = data[i].created_at.replace(/[TZ]/g, " ");
+                data[i].created_at = utc2localTime(data[i].created_at);
                 comment_list.innerHTML += '<li class="gitment-comment">'+
             '<a class="gitment-comment-avatar" href='+data[i].user.html_url+' target="_blank">'+
               '<img class="gitment-comment-avatar-img" src='+data[i].user.avatar_url+'></a>'+
@@ -275,7 +275,7 @@ function comment() {
         success: function (data) {
             if(data.id != undefined) {
                 document.getElementById('comment-input').value = "";
-                data.created_at = data.created_at.replace(/[TZ]/g, " ");
+                data.created_at = utc2localTime(data.created_at);
                 document.getElementById('comment-list').innerHTML += '<li class="gitment-comment">'+
             '<a class="gitment-comment-avatar" href='+data.user.html_url+' target="_blank">'+
               '<img class="gitment-comment-avatar-img" src='+data.user.avatar_url+'></a>'+
@@ -316,7 +316,7 @@ function getIssuePerpage(request_url) {
                     labels_content += '<li><a href=issue_per_label.html?label='+data[i].labels[j].name+'>'+data[i].labels[j].name+'</a></li>';
                 }
                 data[i].body = data[i].body.replace(/<(?!img).*?>/g, "");
-                data[i].created_at = data[i].created_at.replace(/[TZ]/g, " ");
+                data[i].created_at = utc2localTime(data[i].created_at);
                 document.getElementById('issue-list').innerHTML += '<li><p class="date">'+data[i].created_at+
                 '</p><h4 class="title"><a href="content.html?id='+data[i].number+'">'+data[i].title+
                 '</a></h4><div class="excerpt"><p class="issue">'+data[i].body+'</p></div>'+
@@ -324,6 +324,12 @@ function getIssuePerpage(request_url) {
             }
         }
     });
+}
+
+function utc2localTime(time) {
+    var time_string_utc_epoch = Date.parse(time);
+    var unixTimestamp = new Date(time_string_utc_epoch);
+    return unixTimestamp.toLocaleString();
 }
 
 function getPageNum(request_url) {
