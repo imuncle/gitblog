@@ -112,5 +112,5 @@ wechart.svg|微信图标
 - JavaScript刚入门，代码很乱，欢迎提issue，也欢迎PR~
 - 暂未封装API
 
-## 协议
+## 许可
 MIT LICENSE
