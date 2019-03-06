@@ -28,6 +28,7 @@ if(code != undefined && redirect_url != undefined) {
 function PageInit() {
     $('#title').text(config.title);
     $('#instruction').text(config.instruction);
+    $('#github').attr('href','https://github.com/'+config.name);
     document.getElementsByTagName("title")[0].innerText = config.title;
     
     if(Object.keys(config.friends).length != 0) {
@@ -435,4 +436,9 @@ function nextPage() {
     }else {
         window.location.href = '?page='+page;
     }
+}
+
+function GotoGithub()
+{
+    
 }
