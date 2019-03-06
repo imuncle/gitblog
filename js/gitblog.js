@@ -65,20 +65,6 @@ $('.Totop').click(function() {
     );
 });
 
-function WeChart(command)
-{
-  if(command == "show") {
-    $('#wechart-qrcode').css('display','block');
-    $('#wechart-qrcode').css("opacity","1");
-    $('#wechart-qrcode').css("transform","translateY(0)");
-  } else if(command == "hide")
-  {
-    $('#wechart-qrcode').css('display','none');
-    $('#wechart-qrcode').css("opacity","0");
-    $('#wechart-qrcode').css("transform","translateY(-20px)");
-  }
-}
-
 function articlePage() {
     var id = getUrlParam('id');
     var token = getUrlParam('access_token');
@@ -105,6 +91,12 @@ function articlePage() {
                 labels.innerHTML += '<a href="issue_per_label.html?label='+data.labels[i].name+'"># '+data.labels[i].name+'</a>';
             }
             commentListInit(data.comments,id);
+        },
+        error:function(data) {
+            console.log(data);
+            document.getElementsByTagName("title")[0].innerText = config.title;
+            document.getElementById('instruction').innerHTML = config.instruction;
+            document.getElementById('content').innerHTML = '未查找到内容！';
         }
     });
     checkIsLogin();
@@ -132,14 +124,15 @@ function issueListPage() {
     var issue_url;
     var issue_perpage_url;
     if(label == undefined) {
-        issue_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues';
+        issue_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo;
         issue_perpage_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues?';
+        getIssuePerpage(issue_url);
     }else {
         issue_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues?labels='+label;
         issue_perpage_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues?labels='+label+'&';
         document.getElementById('title').innerHTML = label;
+        getLabelPageNum(issue_url);
     }
-    getPageNum(issue_url);
     getIssuePerpage(issue_perpage_url);
 }
 
@@ -163,7 +156,10 @@ function commentListInit(num, issue_id) {
                 '<span>'+data[i].created_at+'</span></div><div class="gitment-comment-body gitment-markdown">'+
                 data[i].body_html+'</div></div>';
             }
-            
+        },
+        error:function(data) {
+            console.log(data);
+            comment_list.innerHTML = '加载评论失败！';
         }
     });
 }
@@ -287,6 +283,10 @@ function comment() {
                 data.body_html+'</div></div>';
                 document.getElementById('comments-num').innerHTML ++;
             }
+        },
+        error:function(data) {
+            console.log(data);
+            alert('评论失败！');
         }
     });
 }
@@ -301,6 +301,10 @@ function GetMenu() {
                 document.getElementById('menu').innerHTML += '<li><a href="issue_per_label.html?label='+data[i].name+'"><span>'+data[i].name+'</span></a></li>';
             }
         },
+        error:function(data) {
+            console.log(data);
+            document.getElementById('menu').innerHTML = '<li><a href="javascript:;"><span>获取菜单失败</span></a></li>';
+        }
     });
     document.getElementById("footer").innerHTML += 'Powered by <a href="https://github.com/imuncle/gitblog" target="_blank" style="color: aquamarine;text-decoration:none;border-bottom: 1px solid #79f8d4;">gitblog</a>';
 }
@@ -324,6 +328,10 @@ function getIssuePerpage(request_url) {
                 '</a></h4><div class="excerpt"><p class="issue">'+data[i].body+'</p></div>'+
                 '<ul class="meta"><li>'+data[i].user.login+'</li>'+labels_content+'</ul></li>';
             }
+        },
+        error:function(data) {
+            console.log(data);
+            document.getElementById('issue-list').innerHTML = '获取文章列表失败！';
         }
     });
 }
@@ -334,7 +342,7 @@ function utc2localTime(time) {
     return unixTimestamp.toLocaleString();
 }
 
-function getPageNum(request_url) {
+function getLabelPageNum(request_url) {
     // 获取issue数量，确定分页数目
     $.ajax({
         type:'get',
@@ -358,6 +366,33 @@ function getPageNum(request_url) {
                 document.getElementById('pages').innerHTML += '<li id="next_page"><a href="javascript:nextPage()">»</a></li>';
                 turnToPage(page, pages);
                 
+            }
+        }
+    });
+}
+
+function getPageNum(request_url) {
+    $.ajax({
+        type:'get',
+        url:request_url,
+        success:function(data) {
+            issue_num = data.open_issues_count;
+            var pages = 1;
+            if(issue_num > 10) {
+                pages = Math.ceil(issue_num/10);
+                $('#pages').css('display','inline-block');
+                document.getElementById('pages').innerHTML = '<li id="last_page"><a href="javascript:lastPage()">«</a></li>';
+                for(var i=1;i<=pages;i++) {
+                    if(getUrlParam('label')!=undefined) {
+                        document.getElementById('pages').innerHTML += '<li><a id="page'+i+'" href="?label='+getUrlParam('label')+'&page='+i+'">'+i+'</a></li>'
+                    }else if(getUrlParam('id')!=undefined) {
+                        document.getElementById('pages').innerHTML += '<li><a id="page'+i+'" href="?id='+getUrlParam('id')+'&page='+i+'">'+i+'</a></li>'
+                    }else {
+                        document.getElementById('pages').innerHTML += '<li><a id="page'+i+'" href="?page='+i+'">'+i+'</a></li>';
+                    }
+                }
+                document.getElementById('pages').innerHTML += '<li id="next_page"><a href="javascript:nextPage()">»</a></li>';
+                turnToPage(page, pages); 
             }
         }
     });
