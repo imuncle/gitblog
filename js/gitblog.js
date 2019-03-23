@@ -28,7 +28,6 @@ if(code != undefined && redirect_url != undefined) {
 function PageInit() {
     $('#title').text(config.title);
     $('#instruction').text(config.instruction);
-    $('#github').attr('href','https://github.com/'+config.name);
     document.getElementsByTagName("title")[0].innerText = config.title;
     
     if(Object.keys(config.friends).length != 0) {
@@ -50,6 +49,8 @@ $('.navi-button').click(function(){
         $('.main-navication span').css("transform","translateX(-10px)");
         $('.navi-button').css("transform","translateX(-150px)");
         $('.Totop').css("transform","translateX(-150px)");
+        $('.search').css("transform","translateX(-150px)");
+        $('.search-input').css("transform","translateX(-150px)");
     }else {
         $('.main').css("transform","translateX(0)");
         $('.main-navication span').css("opacity","0");
@@ -57,6 +58,8 @@ $('.navi-button').click(function(){
         $('.main-navication span').css("transform","translateX(-50px)");
         $('.navi-button').css("transform","translateX(0px)");
         $('.Totop').css("transform","translateX(0px)");
+        $('.search').css("transform","translateX(0px)");
+        $('.search-input').css("transform","translateX(0px)");
     }
 });
 
@@ -66,10 +69,44 @@ $('.Totop').click(function() {
     );
 });
 
+$('.search').click(function() {
+    $(".search-input").css('z-index',99);
+    $(".search-input").css("width",'300px');
+    $(".search-input").focus();
+});
+
+function searchOnblur(){
+    if($('.search-input').val() == "")
+    {
+        $(".search-input").css("width",'42px');
+        $(".search-input").css("z-index",-1);
+    }
+}
+
+$('.search-input').bind('keypress', function (event) { 
+    if (event.keyCode == "13" && $('.search-input').val() != "") {
+        window.location.href = 'issue_per_label.html?q='+$('.search-input').val();
+    }
+})
+
+function WeChart(command)
+{
+  if(command == "show") {
+    $('#wechart-qrcode').css('z-index','99');
+    $('#wechart-qrcode').css("opacity","1");
+    $('#wechart-qrcode').css("transform","translateY(0)");
+  } else if(command == "hide")
+  {
+    $('#wechart-qrcode').css('z-index','-1');
+    $('#wechart-qrcode').css("opacity","0");
+    $('#wechart-qrcode').css("transform","translateY(-20px)");
+  }
+}
+
 function articlePage() {
     var id = getUrlParam('id');
     var token = getUrlParam('access_token');
-    if(token != undefined) {
+    if(token != undefined && token != null) {
         window.localStorage.clear();
         window.localStorage.setItem("access_token",token);
         history.replaceState(null, config.title, 'content.html?id='+id);
@@ -83,7 +120,7 @@ function articlePage() {
         url : 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues/'+id,
         success : function(data) {
             document.getElementById('title').innerHTML = data.title;
-            document.getElementsByTagName("title")[0].innerText = data.title+"-"+config.title;
+            document.getElementsByTagName("title")[0].innerText = data.title+"-大叔的小站";
             data.created_at = utc2localTime(data.created_at);
             document.getElementById('instruction').innerHTML = data.created_at;
             document.getElementById('content').innerHTML = data.body_html;
@@ -92,12 +129,6 @@ function articlePage() {
                 labels.innerHTML += '<a href="issue_per_label.html?label='+data.labels[i].name+'"># '+data.labels[i].name+'</a>';
             }
             commentListInit(data.comments,id);
-        },
-        error:function(data) {
-            console.log(data);
-            document.getElementsByTagName("title")[0].innerText = config.title;
-            document.getElementById('instruction').innerHTML = config.instruction;
-            document.getElementById('content').innerHTML = '未查找到内容！';
         }
     });
     checkIsLogin();
@@ -125,15 +156,41 @@ function issueListPage() {
     var issue_url;
     var issue_perpage_url;
     if(label == undefined) {
-        issue_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo;
-        issue_perpage_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues?';
-        getIssuePerpage(issue_url);
+        var search = getUrlParam('q');
+        if(search == undefined)
+        {
+            issue_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo;
+            issue_perpage_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues?';
+            getPageNum(issue_url);
+        }else {
+            issue_perpage_url = 'https://api.github.com/search/issues?q='+search+' author:'+config.name+'+in:title,body&';
+            search = encodeURI(search);
+            $.ajax({
+                type: 'get',
+                url: 'https://api.github.com/search/issues?q='+search+' author:'+config.name+'+in:title,body',
+                success:function(data) {
+                    pages = Math.ceil(data.total_count/10);
+                    turnToPage(page, pages);
+                }
+            });
+        }
     }else {
         issue_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues?labels='+label;
         issue_perpage_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues?labels='+label+'&';
         document.getElementById('title').innerHTML = label;
+        $.ajax({
+            type:'get',
+            headers : {
+                Accept: 'application/vnd.github.symmetra-preview+json',
+            },
+            url:'https://api.github.com/repos/'+config.name+'/'+config.repo+'/labels/'+label,
+            success:function(data) {
+                document.getElementById('instruction').innerHTML = data.description;
+            }
+        });
         getLabelPageNum(issue_url);
     }
+    
     getIssuePerpage(issue_perpage_url);
 }
 
@@ -157,10 +214,7 @@ function commentListInit(num, issue_id) {
                 '<span>'+data[i].created_at+'</span></div><div class="gitment-comment-body gitment-markdown">'+
                 data[i].body_html+'</div></div>';
             }
-        },
-        error:function(data) {
-            console.log(data);
-            comment_list.innerHTML = '加载评论失败！';
+            
         }
     });
 }
@@ -253,7 +307,7 @@ function logout() {
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
     var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-    if (r != null) return unescape(r[2]); return null; //返回参数值
+    if (r != null) return decodeURI(r[2]); return null; //返回参数值
 }
 
 function comment() {
@@ -284,10 +338,6 @@ function comment() {
                 data.body_html+'</div></div>';
                 document.getElementById('comments-num').innerHTML ++;
             }
-        },
-        error:function(data) {
-            console.log(data);
-            alert('评论失败！');
         }
     });
 }
@@ -301,38 +351,67 @@ function GetMenu() {
             for(var i=0;i<data.length;i++) {
                 document.getElementById('menu').innerHTML += '<li><a href="issue_per_label.html?label='+data[i].name+'"><span>'+data[i].name+'</span></a></li>';
             }
+            document.getElementById('menu').innerHTML += '<li><a href="content.html?id=41"><span>'+'关于我'+'</span></a></li>';
         },
-        error:function(data) {
-            console.log(data);
-            document.getElementById('menu').innerHTML = '<li><a href="javascript:;"><span>获取菜单失败</span></a></li>';
-        }
     });
     document.getElementById("footer").innerHTML += 'Powered by <a href="https://github.com/imuncle/gitblog" target="_blank" style="color: aquamarine;text-decoration:none;border-bottom: 1px solid #79f8d4;">gitblog</a>';
 }
 
 // 获取每一页的issue内容
 function getIssuePerpage(request_url) {
+    console.log(request_url);
+
+    //replaceAll替换函数
+    String.prototype.replaceAll = function(a,b){
+        return this.replace(new RegExp(a,'gm'),b);
+    }
     $.ajax({
         type:'get',
         url:request_url+'page='+page+'&per_page=10',
         success:function(data) {
-            document.getElementById('issue-list').innerHTML = '<br>';
-            for(var i=0;i<data.length;i++) {
-                var labels_content = '';
-                for(var j=0;j<data[i].labels.length;j++) {
-                    labels_content += '<li><a href=issue_per_label.html?label='+data[i].labels[j].name+'>'+data[i].labels[j].name+'</a></li>';
+            var search = getUrlParam('q');
+            if(search == undefined)
+            {
+                if(data.length == 0) {
+                    document.getElementById('issue-list').innerHTML = '这个人很勤快但这里什么都还没写~';
+                    $('.footer').css('position','absolute');
+                }else {
+                    document.getElementById('issue-list').innerHTML = '';
+                    for(var i=0;i<data.length;i++) {
+                        var labels_content = '';
+                        for(var j=0;j<data[i].labels.length;j++) {
+                            labels_content += '<li><a href=issue_per_label.html?label='+data[i].labels[j].name+'>'+data[i].labels[j].name+'</a></li>';
+                        }
+                        data[i].body = data[i].body.replace(/<(?!img).*?>/g, "");
+                        data[i].created_at = utc2localTime(data[i].created_at);
+                        document.getElementById('issue-list').innerHTML += '<li><p class="date">'+data[i].created_at+
+                        '</p><h4 class="title"><a href="content.html?id='+data[i].number+'">'+data[i].title+
+                        '</a></h4><div class="excerpt"><p class="issue">'+data[i].body+'</p></div>'+
+                        '<ul class="meta"><li>'+data[i].user.login+'</li>'+labels_content+'</ul></li>';
+                    }
                 }
-                data[i].body = data[i].body.replace(/<(?!img).*?>/g, "");
-                data[i].created_at = utc2localTime(data[i].created_at);
-                document.getElementById('issue-list').innerHTML += '<li><p class="date">'+data[i].created_at+
-                '</p><h4 class="title"><a href="content.html?id='+data[i].number+'">'+data[i].title+
-                '</a></h4><div class="excerpt"><p class="issue">'+data[i].body+'</p></div>'+
-                '<ul class="meta"><li>'+data[i].user.login+'</li>'+labels_content+'</ul></li>';
+            }else {
+                if(data.items.length == 0) {
+                    window.location.href = "404.html"
+                }else {
+                    document.getElementById('issue-list').innerHTML = '';
+                    for(var i=0;i<data.items.length;i++) {
+                        var labels_content = '';
+                        for(var j=0;j<data.items[i].labels.length;j++) {
+                            labels_content += '<li><a href=issue_per_label.html?label='+data.items[i].labels[j].name+'>'+data.items[i].labels[j].name+'</a></li>';
+                        }
+                        data.items[i].body = data.items[i].body.replace(/<(?!img).*?>/g, "");
+                        data.items[i].created_at = utc2localTime(data.items[i].created_at);
+                        document.getElementById('issue-list').innerHTML += '<li><p class="date">'+data.items[i].created_at+
+                        '</p><h4 class="title"><a href="content.html?id='+data.items[i].number+'">'+data.items[i].title+
+                        '</a></h4><div class="excerpt"><p class="issue">'+data.items[i].body+'</p></div>'+
+                        '<ul class="meta"><li>'+data.items[i].user.login+'</li>'+labels_content+'</ul></li>';
+                    }
+                    var html = document.getElementById('issue-list').innerHTML;
+                    var newHtml = html.replaceAll(search,'<font style="background-color:yellow;">'+search+'</font>');
+                    document.getElementById('issue-list').innerHTML = newHtml;
+                }
             }
-        },
-        error:function(data) {
-            console.log(data);
-            document.getElementById('issue-list').innerHTML = '获取文章列表失败！';
         }
     });
 }
@@ -438,7 +517,10 @@ function nextPage() {
     }
 }
 
-function GotoGithub()
-{
-    
+window.onscroll = function() {
+    if($(document).scrollTop() >= 0.6*document.documentElement.clientHeight) {
+        $('.Totop').css('opacity',1);
+    }else {
+        $('.Totop').css('opacity',0);
+    }
 }

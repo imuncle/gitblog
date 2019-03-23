@@ -9,6 +9,7 @@ Demo page: [大叔的个人小站](https://imuncle.github.io)
 - [x] Publish an article
 - [x] Article comments
 - [x] Set labels for article
+- [x] Search for aticle
 
 You can publish your article in Github issues page, just click 'New issue'.
 

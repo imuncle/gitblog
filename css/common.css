@@ -122,3 +122,28 @@ cursor: pointer;
     transform: translateY(0px);
     transition: all 0.4s;
 }
+.search {
+    opacity: 0.6;
+    position: fixed;
+    right: 20px;
+    top: 60px;
+    cursor: pointer;
+    z-index: 99;
+    width: 35px;
+    transition: all 0.4s;
+}
+.search-input {
+    width: 42px;
+    height: 42px;
+    padding-left: 15px;
+    border-radius: 42px;
+    border: 1px solid rgba(127,140,141,0.6);
+    background: white;
+    outline: none;
+    position: relative;
+    transition: all 0.4s;
+    position: fixed;
+    right: 10px;
+    top: 57px;
+    z-index: -1;
+}

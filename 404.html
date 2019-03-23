@@ -24,11 +24,19 @@ permalink: /404.html
 			<img src="images/404.png" class="info" id="info" />
 		</div><!--bannerWrap结束-->
 		<div style="text-align: center;margin-top:100px">
-			<a href="https://imuncle.github.io" style="color: #666666;font-weight: 200;font-size: 20px;text-decoration: none;">回到首页</a>
+			<input type="text" class="search-input" placeholder="回车搜索" style="width: 300px;height: 42px;padding-left: 15px;border-radius: 42px;border: 1px solid rgba(127,140,141,0.6);background: white;outline: none;">
+			<br><br><br>
+			<a href="./" style="color: #666666;font-weight: 200;font-size: 20px;text-decoration: none;">回到首页</a>
 		</div>
 
 		<script src = "js/jquery.min.js"></script>
 		<script type="text/javascript">
+		$('.search-input').bind('keypress', function (event) { 
+			if (event.keyCode == "13" && $('.search-input').val() != "") {
+				window.location.href = 'issue_per_label.html?q='+$('.search-input').val();
+			}
+		})
+
 		$(function(){
 			var win_w, win_h,b_w, b_h,
 			small_house, house, fish, info, pToW_w, pToW_h, $img,
