@@ -6,6 +6,12 @@ var config = {
     title : "add your title",
     instruction : "add your instruction",
     server_link : 'your server link here',
+    pin_links:{
+        //add the page title and the issue number to pin these pages
+        //example:
+        //Title : issue number,
+        关于我:1//修改为对应的issue号码
+    },
     friends : {
         //add your friends link here
         //example:
@@ -38,6 +44,7 @@ function PageInit() {
         }
     }
     GetMenu();
+    document.getElementById("github").setAttribute("href","https://github.com/"+config.name);
 }
 
 $('.navi-button').click(function(){
@@ -120,7 +127,7 @@ function articlePage() {
         url : 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues/'+id,
         success : function(data) {
             document.getElementById('title').innerHTML = data.title;
-            document.getElementsByTagName("title")[0].innerText = data.title+"-大叔的小站";
+            document.getElementsByTagName("title")[0].innerText = data.title + "-"+config.title;
             data.created_at = utc2localTime(data.created_at);
             document.getElementById('instruction').innerHTML = data.created_at;
             document.getElementById('content').innerHTML = data.body_html;
@@ -160,7 +167,7 @@ function issueListPage() {
         if(search == undefined)
         {
             issue_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo;
-            issue_perpage_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues?';
+            issue_perpage_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues?creator=' + config.name + '&';
             getPageNum(issue_url);
         }else {
             issue_perpage_url = 'https://api.github.com/search/issues?q='+search+' author:'+config.name+'+in:title,body&';
@@ -351,7 +358,9 @@ function GetMenu() {
             for(var i=0;i<data.length;i++) {
                 document.getElementById('menu').innerHTML += '<li><a href="issue_per_label.html?label='+data[i].name+'"><span>'+data[i].name+'</span></a></li>';
             }
-            document.getElementById('menu').innerHTML += '<li><a href="content.html?id=41"><span>'+'关于我'+'</span></a></li>';
+            for(var name in config.pin_links) {
+                document.getElementById('menu').innerHTML += '<li><a href="content.html?id='+config.pin_links[name]+'"><span>'+name+'</span></a></li>';
+                }
         },
     });
     document.getElementById("footer").innerHTML += 'Powered by <a href="https://github.com/imuncle/gitblog" target="_blank" style="color: aquamarine;text-decoration:none;border-bottom: 1px solid #79f8d4;">gitblog</a>';
