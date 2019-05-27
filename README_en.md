@@ -62,7 +62,7 @@ client_secret|Fill in the "client secret" you got when applying for OAuth APP
 title|Fill in the title of your personal website
 instruction|Fill in the profile of your website
 server_link|Fill in your server address, if there is no server to fill in 'http://119.23.8.25/gh-oauth-server.php'
-pin_links|Fill in the display name and the corresponding issue number that need to be fixed in the menu
+pin_links|Fill in the title and the corresponding issue number that need to be fixed in the menu
 friends|Fill in the friendship chain of your website (optional)
 
 The server_link above is the address of the server, because the access_token of the accessing user must be accessed through the server. Details can be found in [this article] (https://imuncle.github.io/content.html?id=22). This server is written in PHP and is only responsible for requesting the user's access_token and does not store any data. See the source code (in the **server** folder of this repository). 
