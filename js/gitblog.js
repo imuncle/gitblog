@@ -10,7 +10,7 @@ var config = {
         //add the page title and the issue number to pin these pages
         //example:
         //Title : issue number,
-        关于我:1//修改为对应的issue号码
+        //关于我:1//修改为对应的issue号码
     },
     friends : {
         //add your friends link here
@@ -368,9 +368,6 @@ function GetMenu() {
 
 // 获取每一页的issue内容
 function getIssuePerpage(request_url) {
-    console.log(request_url);
-
-    //replaceAll替换函数
     String.prototype.replaceAll = function(a,b){
         return this.replace(new RegExp(a,'gm'),b);
     }
