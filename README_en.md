@@ -47,6 +47,21 @@ var config = {
 ```
 Add your own information into it.
 
+Options|interpretation
+:--:|:--:
+name|Fill in your GitHub username
+repo|Fill in your pages corresponding repository, which is generally: username.github.io
+client_id|Fill in the "client id" you got when you applied for OAuth APP
+client_secret|Fill in the "client secret" you got when applying for OAuth APP
+title|Fill in the title of your personal website
+instruction|Fill in the profile of your website
+server_link|Fill in your server address, if there is no server to fill in 'http://119.23.8.25/gh-oauth-server.php'
+friends|Fill in the friendship chain of your website (optional)
+
+The server_link above is the address of the server, because the access_token of the accessing user must be accessed through the server. Details can be found in [this article] (https://imuncle.github.io/content.html?id=22). This server is written in PHP and is only responsible for requesting the user's access_token and does not store any data. See the source code (in the **server** folder of this repository). 
+
+If you have a server, you can use the PHP code to configure the server yourself and write **server_link** as your server address.
+
 ### Dynamic typing
 You can see a dynamic typing effect in the home page in [demo page](https://imuncle.github.io). This is references by [type.js](https://github.com/mattboldt/typed.js). You can config it in **index.html**:
 
