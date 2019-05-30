@@ -54,7 +54,6 @@ var config = {
         //add the page title and the issue number to pin these pages
         //example:
         //Title : issue number,
-        关于我:1
     },
     friends : {
         //add your friends link here
