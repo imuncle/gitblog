@@ -124,6 +124,7 @@ var gitblog = function (options) {
     var Pages = function() {
         this.page = 1;
         this.pages = 1;
+        this.itemNum = 0;
     }
 
     Pages.prototype.getNum = function(request_url) {
@@ -137,15 +138,18 @@ var gitblog = function (options) {
             success:function(data) {
                 if(self.options.label != null && self.options.label != undefined) {
                     if(self.options.q != null && self.options.q != undefined) {
-                        issue_num = data.total_count;
+                        page.itemNum = data.total_count;
                     } else {
-                        issue_num = data.length;
+                        page.itemNum = data.length;
                     }
+                } else if(self.options.id != null && self.options.id != undefined) {
+                    page.itemNum = data.length;
+                    document.getElementById('comments-num').innerHTML = page.itemNum;
                 } else {
-                    issue_num = data.open_issues_count;
+                    page.itemNum = data.open_issues_count;
                 }
-                if(issue_num > 10) {
-                    page.pages = Math.ceil(issue_num/10);
+                if(page.itemNum > 10) {
+                    page.pages = Math.ceil(page.itemNum/10);
                     page.show();
                 }
             }
@@ -157,7 +161,9 @@ var gitblog = function (options) {
         document.getElementById('pages').innerHTML = '<li id="last_page"><a href="javascript:blog.content.page.last()">«</a></li>';
         for(var i=1;i<=this.pages;i++) {
             if(self.options.label != undefined) {
-                document.getElementById('pages').innerHTML += '<li><a id="page'+i+'" href="?label='+self.options.label+'&page='+i+'">'+i+'</a></li>'
+                document.getElementById('pages').innerHTML += '<li><a id="page'+i+'" href="?label='+self.options.label+'&page='+i+'">'+i+'</a></li>';
+            } else if(self.options.id != undefined) {
+                document.getElementById('pages').innerHTML += '<li><a id="page'+i+'" href="?id='+self.options.id+'&page='+i+'">'+i+'</a></li>';
             }else {
                 document.getElementById('pages').innerHTML += '<li><a id="page'+i+'" href="?page='+i+'">'+i+'</a></li>';
             }
@@ -181,7 +187,9 @@ var gitblog = function (options) {
         this.page--;
         if(self.options.label!=undefined) {
             window.location.href = '?label='+self.options.label+'&page='+this.page;
-        }else {
+        } else if(self.options.id != undefined && self.options.id != null) {
+            window.location.href = '?id='+self.options.id+'&page='+this.page;
+        } else {
             window.location.href = '?page='+this.page;
         }
     }
@@ -190,13 +198,14 @@ var gitblog = function (options) {
         this.page++;
         if(self.options.label!=undefined) {
             window.location.href = '?label='+self.options.label+'&page='+this.page;
-        }else {
+        } else if(self.options.id != undefined && self.options.id != null) {
+            window.location.href = '?id='+self.options.id+'&page='+this.page;
+        } else {
             window.location.href = '?page='+this.page;
         }
     }
 
     var Comment = function() {
-        this.user = "";
         this.login = false;
     }
 
@@ -220,6 +229,7 @@ var gitblog = function (options) {
                 if(data.id != undefined) {
                     document.getElementById('comment-input').value = "";
                     comment.addComment(data);
+                    document.getElementById('comments-num').innerHTML ++;
                 }
             }
         });
@@ -227,7 +237,7 @@ var gitblog = function (options) {
 
     Comment.prototype.init = function() {
         var comment = this;
-        document.getElementById('comments-num').innerHTML = 0;
+        
         $.ajax({
             type : 'get',
             headers : {
@@ -269,7 +279,6 @@ var gitblog = function (options) {
             '<a class="gitment-comment-name" href='+data.user.html_url+' target="_blank">'+data.user.login+'</a> 评论于 '+
             '<span>'+data.created_at+'</span></div><div class="gitment-comment-body gitment-markdown">'+
             data.body_html+'</div></div>';
-        document.getElementById('comments-num').innerHTML ++;
     }
 
     Comment.prototype.checkIsLogin = function() {
@@ -346,6 +355,8 @@ var gitblog = function (options) {
 
     var Article = function() {
         this.comments = new Comment();
+        this.page = new Pages();
+        this.comment_url = "";
     }
 
     Article.prototype.init = function() {
@@ -355,6 +366,8 @@ var gitblog = function (options) {
             window.localStorage.setItem("access_token",self.options.token);
             history.replaceState(null, config.title, 'content.html?id='+self.options.id);
         }
+        article.comment_url = 'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues/'+self.options.id+'/comments';
+        article.page.getNum(article.comment_url);
         $.ajax({
             type : 'get',
             headers : {
