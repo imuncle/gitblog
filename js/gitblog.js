@@ -201,11 +201,12 @@ var gitblog = function (options) {
     }
 
     Comment.prototype.send = function() {
+        var comment = this;
         var input = document.getElementById('comment-input').value;
         var access_token = window.localStorage.access_token;
         $.ajax({
             type: "post",
-            url:'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues/'+getUrlParam('id')+'/comments',
+            url:'https://api.github.com/repos/'+config.name+'/'+config.repo+'/issues/'+self.options.id+'/comments',
             headers: {
             Authorization : 'token '+ access_token,
                 Accept: 'application/vnd.github.squirrel-girl-preview, application/vnd.github.html+json',
@@ -218,7 +219,7 @@ var gitblog = function (options) {
             success: function (data) {
                 if(data.id != undefined) {
                     document.getElementById('comment-input').value = "";
-                    this.addComment(data);
+                    comment.addComment(data);
                 }
             }
         });
@@ -241,16 +242,6 @@ var gitblog = function (options) {
             }
         });
         this.checkIsLogin();
-
-        var avatar = document.getElementById('avatar');
-        if(this.login == false) {
-            avatar.innerHTML = '<a class="gitment-editor-avatar" href="javascript:login()" title="login with GitHub">'+
-            '<svg class="gitment-github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path d="M25 10c-8.3 0-15 6.7-15 15 0 6.6 4.3 12.2 10.3 14.2.8.1 1-.3 1-.7v-2.6c-4.2.9-5.1-2-5.1-2-.7-1.7-1.7-2.2-1.7-2.2-1.4-.9.1-.9.1-.9 1.5.1 2.3 1.5 2.3 1.5 1.3 2.3 3.5 1.6 4.4 1.2.1-1 .5-1.6 1-2-3.3-.4-6.8-1.7-6.8-7.4 0-1.6.6-3 1.5-4-.2-.4-.7-1.9.1-4 0 0 1.3-.4 4.1 1.5 1.2-.3 2.5-.5 3.8-.5 1.3 0 2.6.2 3.8.5 2.9-1.9 4.1-1.5 4.1-1.5.8 2.1.3 3.6.1 4 1 1 1.5 2.4 1.5 4 0 5.8-3.5 7-6.8 7.4.5.5 1 1.4 1 2.8v4.1c0 .4.3.9 1 .7 6-2 10.2-7.6 10.2-14.2C40 16.7 33.3 10 25 10z"></path></svg>'+
-            '</a></div>';
-        }else {
-            avatar.innerHTML = '<a class="gitment-comment-avatar" href='+window.localStorage.user_url+' target="_blank">'+
-            '<img class="gitment-comment-avatar-img" src='+window.localStorage.user_avatar_url+'></a>';
-        }
 
         var login = document.getElementById('login');
         if(this.login == false) {
@@ -286,6 +277,7 @@ var gitblog = function (options) {
         if(window.localStorage.access_token != undefined) {
             this.login = true;
         }
+        var avatar = document.getElementById('avatar');
         if(this.login == true) {
             $.ajax({
                 type: "get",
@@ -293,12 +285,18 @@ var gitblog = function (options) {
                 success: function (data) {
                     window.localStorage.setItem('user_avatar_url',data.avatar_url);
                     window.localStorage.setItem('user_url', data.html_url);
+                    avatar.innerHTML = '<a class="gitment-comment-avatar" href='+window.localStorage.user_url+' target="_blank">'+
+                    '<img class="gitment-comment-avatar-img" src='+window.localStorage.user_avatar_url+'></a>';
                 },
                 error:function() {
                     console.log("用户信息过期，退出登录状态");
                     comment.logout();
                 }
             });
+        } else {
+            avatar.innerHTML = '<a class="gitment-editor-avatar" href="javascript:login()" title="login with GitHub">'+
+            '<svg class="gitment-github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path d="M25 10c-8.3 0-15 6.7-15 15 0 6.6 4.3 12.2 10.3 14.2.8.1 1-.3 1-.7v-2.6c-4.2.9-5.1-2-5.1-2-.7-1.7-1.7-2.2-1.7-2.2-1.4-.9.1-.9.1-.9 1.5.1 2.3 1.5 2.3 1.5 1.3 2.3 3.5 1.6 4.4 1.2.1-1 .5-1.6 1-2-3.3-.4-6.8-1.7-6.8-7.4 0-1.6.6-3 1.5-4-.2-.4-.7-1.9.1-4 0 0 1.3-.4 4.1 1.5 1.2-.3 2.5-.5 3.8-.5 1.3 0 2.6.2 3.8.5 2.9-1.9 4.1-1.5 4.1-1.5.8 2.1.3 3.6.1 4 1 1 1.5 2.4 1.5 4 0 5.8-3.5 7-6.8 7.4.5.5 1 1.4 1 2.8v4.1c0 .4.3.9 1 .7 6-2 10.2-7.6 10.2-14.2C40 16.7 33.3 10 25 10z"></path></svg>'+
+            '</a></div>';
         }
     }
 
