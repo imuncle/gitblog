@@ -39,9 +39,10 @@ var config = {
     instruction : "add your instruction",
     server_link : 'your server link here',
     pin_links:{
-        //add the page title and the issue number to pin these pages
+        //add the page title and the URL/issue_Id to pin these pages
         //example:
-        //Title : issue number,
+        //RSS : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
+        //About me : "1"
     },
     friends : {
         //add your friends link here
