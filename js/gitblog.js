@@ -7,9 +7,10 @@ var config = {
     instruction: "add your instruction",
     server_link: 'your server link here',
     pin_links: {
-        //add the page title and the issue number to pin these pages
+        //add the page title and the URL/issue_Id to pin these pages
         //example:
-        //Title : issue number,
+        //RSS : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
+        //About me : "1"
     },
     friends: {
         //add your friends link here
@@ -94,7 +95,15 @@ var gitblog = function (options) {
                     document.getElementById('menu').innerHTML += '<li><a href="issue_per_label.html?label=' + data[i].name + '"><span>' + data[i].name + '</span></a></li>';
                 }
                 for (var name in config.pin_links) {
-                    document.getElementById('menu').innerHTML += '<li><a href="content.html?id=' + config.pin_links[name] + '"><span>' + name + '</span></a></li>';
+                    var targetUrl;
+                    //Check whether it is an external URL, if not, link to the corresponding page by issue_id
+                    if (config.pin_links[name].indexOf("http") == -1) {
+                        targetUrl = "content.html?id=" + config.pin_links[name];
+                    }
+                    else if (config.pin_links[name].indexOf("http") != -1) {
+                        targetUrl = config.pin_links[name];
+                    }
+                    document.getElementById('menu').innerHTML += '<li><a href="' + targetUrl + '"><span>' + name + '</span></a></li>';
                 }
             },
         });
