@@ -108,16 +108,13 @@ github.svg|GitHub图标
 house1.png|404页面
 house2.png|404页面
 page_backfround.jpg|首页的背景图
-wechart-qrcode.jpg|微信公众号二维码
-wechart.svg|微信图标
 
 如果没有前端知识，建议更改图片时不要更改文件名。
 
 ## 不足
 - client_id和client_secret直接写在了JavaScript中，不是太安全。
 - 页面底部的导航未封装，只能手动配置，稍微需要一些前端知识。
-- JavaScript刚入门，代码很乱，欢迎提issue，也欢迎PR~
-- 暂未封装API
+- 欢迎提issue，也欢迎PR~
 
 ## 许可
 MIT LICENSE
