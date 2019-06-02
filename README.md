@@ -74,7 +74,7 @@ client_secret|填写你申请OAuth APP时拿到的client_secret
 title|填写你的个人网站的标题
 instruction|填写你的个人网站的简介
 server_link|填写你的服务端地址，若没有服务器可填写'http://119.23.8.25/gh-oauth-server.php'
-pin_links|填写需要固定在右侧菜单中的显示名称和对应的issue号
+pin_links|填写需要固定在右侧菜单中的显示名称和对应的issue号/任意链接
 friends|填写你的网站的友链，若没有则不填写
 
 上面的server_link是服务端的地址，，因为访问用户的access_token必须通过服务端访问，详情可见[这篇文章](https://imuncle.github.io/content.html?id=22)。这个服务端使用PHP编写，只负责请求用户的access_token，不会存储任何数据。详见源代码（在本仓库的**server**文件夹里）。
