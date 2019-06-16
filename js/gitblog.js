@@ -16,7 +16,7 @@ var config = {
         //add your friends link here
         //example:
         //imuncle : 'https://imuncle.github.io',
-    },
+    }
 };
 
 String.prototype.replaceAll = function (a, b) {
@@ -38,8 +38,8 @@ var gitblog = function (options) {
         q: null,
         page: 1,
         token: null,
-        code : null,
-        redirect_url : null,
+        code: null,
+        redirect_url: null,
     }
 
     self.set = function (options) {
@@ -65,10 +65,10 @@ var gitblog = function (options) {
             self.options.redirect_url = self.getUrlParam('state');
         }
 
-        if(self.options.code != null && self.options.redirect_url != null) {
-            window.location.href = config.server_link+"?code="+code+"&redirect_url="+redirect_url+"&client_id="+config.client_id+"&client_secret="+config.client_secret;
+        if (self.options.code != null && self.options.redirect_url != null) {
+            window.location.href = config.server_link + "?code=" + self.options.code + "&redirect_url=" + self.options.redirect_url + "&client_id=" + config.client_id + "&client_secret=" + config.client_secret;
         }
-        
+
         for (var i in options) {
             if (self.options[i] != undefined) {
                 self.options[i] = options[i];
@@ -93,6 +93,7 @@ var gitblog = function (options) {
         $('#title').text(this.title);
         $('#instruction').text(this.instruction);
         document.getElementsByTagName("title")[0].innerText = this.title;
+        document.getElementById("github").setAttribute("href", "https://github.com/" + config.name);
     }
 
     var Menu = function () {
@@ -325,7 +326,7 @@ var gitblog = function (options) {
                 }
             });
         } else {
-            avatar.innerHTML = '<a class="gitment-editor-avatar" href="javascript:login()" title="login with GitHub">' +
+            avatar.innerHTML = '<a class="gitment-editor-avatar" href="javascript:blog.content.comments.log()" title="login with GitHub">' +
                 '<svg class="gitment-github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path d="M25 10c-8.3 0-15 6.7-15 15 0 6.6 4.3 12.2 10.3 14.2.8.1 1-.3 1-.7v-2.6c-4.2.9-5.1-2-5.1-2-.7-1.7-1.7-2.2-1.7-2.2-1.4-.9.1-.9.1-.9 1.5.1 2.3 1.5 2.3 1.5 1.3 2.3 3.5 1.6 4.4 1.2.1-1 .5-1.6 1-2-3.3-.4-6.8-1.7-6.8-7.4 0-1.6.6-3 1.5-4-.2-.4-.7-1.9.1-4 0 0 1.3-.4 4.1 1.5 1.2-.3 2.5-.5 3.8-.5 1.3 0 2.6.2 3.8.5 2.9-1.9 4.1-1.5 4.1-1.5.8 2.1.3 3.6.1 4 1 1 1.5 2.4 1.5 4 0 5.8-3.5 7-6.8 7.4.5.5 1 1.4 1 2.8v4.1c0 .4.3.9 1 .7 6-2 10.2-7.6 10.2-14.2C40 16.7 33.3 10 25 10z"></path></svg>' +
                 '</a></div>';
         }
