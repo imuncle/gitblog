@@ -38,8 +38,8 @@ var gitblog = function (options) {
         q: null,
         page: 1,
         token: null,
-        code : null,
-        redirect_url : null,
+        code: null,
+        redirect_url: null,
     }
 
     self.set = function (options) {
@@ -65,10 +65,10 @@ var gitblog = function (options) {
             self.options.redirect_url = self.getUrlParam('state');
         }
 
-        if(self.options.code != null && self.options.redirect_url != null) {
-            window.location.href = config.server_link+"?code="+code+"&redirect_url="+redirect_url+"&client_id="+config.client_id+"&client_secret="+config.client_secret;
+        if (self.options.code != null && self.options.redirect_url != null) {
+            window.location.href = config.server_link + "?code=" + code + "&redirect_url=" + redirect_url + "&client_id=" + config.client_id + "&client_secret=" + config.client_secret;
         }
-        
+
         for (var i in options) {
             if (self.options[i] != undefined) {
                 self.options[i] = options[i];
@@ -93,6 +93,7 @@ var gitblog = function (options) {
         $('#title').text(this.title);
         $('#instruction').text(this.instruction);
         document.getElementsByTagName("title")[0].innerText = this.title;
+        document.getElementById("github").setAttribute("href", "https://github.com/" + config.name);
     }
 
     var Menu = function () {
