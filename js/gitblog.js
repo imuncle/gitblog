@@ -293,8 +293,88 @@ var gitblog = function(options) {
         }
     }
 
+    var Reaction = function() {
+        this.num = 0;
+        this.isLike = false;
+    }
+
+    Reaction.prototype.like = function(type, id) {
+        var reaction = this;
+        if (reaction.isLike == true) return;
+        if (window.localStorage.access_token == undefined || window.localStorage.access_token == null) {
+            alert("请先登录！");
+            return;
+        }
+        var request_url = '';
+        if (type == 'issue') {
+            request_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues/' + id + '/reactions';
+        } else if (type == 'comment') {
+            request_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues/comments/' + id + '/reactions';
+        }
+        $.ajax({
+            type: "post",
+            url: request_url,
+            headers: {
+                Authorization: 'token ' + window.localStorage.access_token,
+                Accept: 'application/vnd.github.squirrel-girl-preview+json'
+            },
+            data: JSON.stringify({
+                "content": "heart"
+            }),
+            success: function() {
+                reaction.num += 1;
+                reaction.isLike = true;
+                reaction.show(id);
+            }
+        });
+    }
+
+    Reaction.prototype.getNum = function(type, id) {
+        var reaction = this;
+        var request_url = '';
+        if (type == 'issue') {
+            request_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues/' + id + '/reactions';
+        } else if (type == 'comment') {
+            request_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues/comments/' + id + '/reactions';
+        }
+        $.ajax({
+            type: "get",
+            url: request_url + '?content=heart',
+            headers: {
+                Accept: 'application/vnd.github.squirrel-girl-preview+json'
+            },
+            success: function(data) {
+                for (var i in data) {
+                    if (data[i].user.login == window.localStorage.name) {
+                        reaction.isLike = true;
+                    }
+                }
+                reaction.num = data.length;
+                reaction.show(id);
+            }
+        });
+    }
+
+    Reaction.prototype.show = function(id) {
+        var reaction = this;
+        if (reaction.isLike == false) {
+            document.getElementById(id).innerHTML = '<svg style="height:20px;float:left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path d="M25 39.7l-.6-.5C11.5 28.7 8 25 8 19c0-5 4-9 9-9 4.1 0 6.4 2.3 8 4.1 1.6-1.8 3.9-4.1 8-4.1 5 0 9 4 9 9 0 6-3.5 9.7-16.4 20.2l-.6.5zM17 12c-3.9 0-7 3.1-7 7 0 5.1 3.2 8.5 15 18.1 11.8-9.6 15-13 15-18.1 0-3.9-3.1-7-7-7-3.5 0-5.4 2.1-6.9 3.8L25 17.1l-1.1-1.3C22.4 14.1 20.5 12 17 12z"></path></svg>';
+        } else if (reaction.isLike == true) {
+            document.getElementById(id).innerHTML = '❤️';
+        }
+        document.getElementById(id).innerHTML += reaction.num;
+        document.getElementById(id).onclick = function() {
+            reaction.like('comment', id);
+        };
+    }
+
+    var commentItem = function() {
+        this.reaction = new Reaction();
+    }
+
     var Comment = function() {
         this.login = false;
+        this.item = [];
     }
 
     Comment.prototype.send = function() {
@@ -325,6 +405,7 @@ var gitblog = function(options) {
 
     Comment.prototype.init = function() {
         var comment = this;
+        comment.checkIsLogin();
         $.ajax({
             type: 'get',
             headers: {
@@ -338,17 +419,16 @@ var gitblog = function(options) {
                 }
             }
         });
-        this.checkIsLogin();
 
         var login = document.getElementById('login');
-        if (this.login == false) {
+        if (comment.login == false) {
             login.innerHTML = '<a class="gitment-editor-login-link" href="javascript:blog.content.comments.log()">登入</a> with GitHub';
         } else {
             login.innerHTML = '<a class="gitment-editor-login-link" href="javascript:blog.content.comments.logout()">登出</a>';
         }
 
         var editor_content = document.getElementById('write-field');
-        if (this.login == false) {
+        if (comment.login == false) {
             editor_content.innerHTML = '<textarea placeholder="(发表评论)" title="请登入以发表评论" disabled id="comment-input"></textarea>';
             $('.gitment-editor-submit').attr("disabled", true);
         } else {
@@ -362,8 +442,11 @@ var gitblog = function(options) {
     }
 
     Comment.prototype.addComment = function(data) {
+        var comment = new commentItem();
         data.created_at = self.utc2localTime(data.created_at);
-        document.getElementById('comment-list').innerHTML += '<li class="gitment-comment">' + '<a class="gitment-comment-avatar" href=' + data.user.html_url + ' target="_blank">' + '<img class="gitment-comment-avatar-img" src=' + data.user.avatar_url + '></a>' + '<div class="gitment-comment-main"><div class="gitment-comment-header">' + '<a class="gitment-comment-name" href=' + data.user.html_url + ' target="_blank">' + data.user.login + '</a> 评论于 ' + '<span>' + data.created_at + '</span></div><div class="gitment-comment-body gitment-markdown">' + data.body_html + '</div></div>';
+        document.getElementById('comment-list').innerHTML += '<li class="gitment-comment">' + '<a class="gitment-comment-avatar" href=' + data.user.html_url + ' target="_blank">' + '<img class="gitment-comment-avatar-img" src=' + data.user.avatar_url + '></a>' + '<div class="gitment-comment-main"><div class="gitment-comment-header">' + '<a class="gitment-comment-name" href=' + data.user.html_url + ' target="_blank">' + data.user.login + '</a> 评论于 ' + '<span>' + data.created_at + '</span>' + '<div style="float:right;cursor:pointer" id="' + data.id + '"></div>' + '</div><div class="gitment-comment-body gitment-markdown">' + data.body_html + '</div></div>';
+        comment.reaction.getNum('comment', data.id);
+        this.item.push(comment);
     }
 
     Comment.prototype.checkIsLogin = function() {
@@ -379,6 +462,7 @@ var gitblog = function(options) {
                 success: function(data) {
                     window.localStorage.setItem('user_avatar_url', data.avatar_url);
                     window.localStorage.setItem('user_url', data.html_url);
+                    window.localStorage.setItem('name', data.login);
                     avatar.innerHTML = '<a class="gitment-comment-avatar" href=' + window.localStorage.user_url + ' target="_blank">' + '<img class="gitment-comment-avatar-img" src=' + window.localStorage.user_avatar_url + '></a>';
                 },
                 error: function() {
@@ -445,6 +529,7 @@ var gitblog = function(options) {
     var Article = function() {
         this.comments = new Comment();
         this.page = new Pages();
+        this.reaction = new Reaction();
         this.comment_url = "";
     }
 
@@ -473,6 +558,8 @@ var gitblog = function(options) {
                 for (var i in data.labels) {
                     labels.innerHTML += '<a href="issue_per_label.html?label=' + data.labels[i].name + '"># ' + data.labels[i].name + '</a>';
                 }
+                labels.innerHTML += '<div style="float:right;cursor:pointer" id="' + self.options.id + '"></div>';
+                article.reaction.getNum('issue', self.options.id);
                 article.comments.init();
             }
         });

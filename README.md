@@ -11,6 +11,7 @@
 - [x] 文章、评论分页
 - [x] 文章设置标签
 - [x] 文章搜索功能
+- [x] 文章、评论点赞功能（不能取消点赞 :stuck_out_tongue_winking_eye:
 
 博客本身没有发表文章的接口，而是在GitHub的issue页面直接new issue。
 
