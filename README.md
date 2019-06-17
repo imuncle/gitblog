@@ -15,7 +15,7 @@
 
 博客本身没有发表文章的接口，而是在GitHub的issue页面直接new issue。
 
-评论功能参考了[Gitment](https://github.com/imsun/gitment)，借用了Gitment的css样式，重写了JavaScript逻辑。评论功能基于GitHub的issue，支持Markdown语法，支持@功能，但暂未加入点赞功能。
+评论功能参考了[Gitment](https://github.com/imsun/gitment)，借用了Gitment的css样式，重写了JavaScript逻辑。评论功能基于GitHub的issue，支持Markdown语法，支持@功能，支持点赞功能。
 
 可以在GitHub上为每个文章指定标签label，每个label都会作为博客菜单里的一个子菜单项，所以请注意**删除仓库里默认的一些label**。
 
@@ -24,7 +24,7 @@
 ## 如何开始
 
 ### 复制该仓库
-最快捷的方法就是直接**Fork**这个repo，然后clone到本地（可选），然后稍微配置一下就能直接使用了。
+最快捷的方法就是直接**Fork**这个repo，修改仓库名为`username.github.io`格式，然后稍微配置一下就能直接使用了。
 
 第二种办法就是clone仓库
 
