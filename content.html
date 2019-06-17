@@ -12,7 +12,7 @@
   </head>
   <body>
     <label class="navi-button">MENU</label>
-    <input type="text" class="search-input" placeholder="回车搜索" onblur="searchOnblur()">
+    <input type="text" class="search-input" placeholder="回车搜索">
     <img src="images/search.svg" class="search">
     <ul class="main-navication">
       <ul id="menu"></ul>
@@ -45,8 +45,8 @@
               <div class="gitment-editor-main">
                 <div class="gitment-editor-header">
                   <nav class="gitment-editor-tabs">
-                    <button class="gitment-editor-tab gitment-selected" onclick="editComment()" id="editComment">评论</button>
-                    <button class="gitment-editor-tab" onclick="blog.content.comments.preview()" id="preview">预览</button>
+                    <button class="gitment-editor-tab gitment-selected" id="editComment">评论</button>
+                    <button class="gitment-editor-tab" id="preview">预览</button>
                   </nav>
                   <div class="gitment-editor-login" id='login'></div>
                 </div>
@@ -63,16 +63,14 @@
                 <a class="gitment-editor-footer-tip" href="https://guides.github.com/features/mastering-markdown/" target="_blank">
                   支持 Markdown 语法
                 </a>
-                <button class="gitment-editor-submit" disabled onclick="blog.content.comments.send()">发送</button>
+                <button class="gitment-editor-submit" disabled>发送</button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="footer" style="text-align: center">
-        <div>
-          <a id="github" title="Github" target="_blank"><img src="images/github.svg" style="width:50px;margin-left:10px;margin-right:10px"></a>
-        </div>
+        <div id='icon' style="display: flex;justify-content: center;padding: 0;align-items: center"></div>
         <div id="footer" style="text-align: center;background: #2c3e50;padding-top: 30px;color: white"></div>
       </div>
     </div>

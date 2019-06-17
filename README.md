@@ -43,24 +43,42 @@ git clone "https:/github.com/imuncle/gitblog"
 在**gitblog.js**中，找到如下代码：
 ```js
 var config = {
-    name : "your github username",
-    repo : "your github reponame",
-    client_id : "your client_id here",
-    client_secret : "your client_secret here",
-    title : "add your title",
-    instruction : "add your instruction",
-    server_link : 'your server link here',
-    pin_links:{
+    name: "your github username",
+    repo: "your github reponame",
+    client_id: "your client_id here",
+    client_secret: "your client_secret here",
+    title: "add your title",
+    instruction: "add your instruction",
+    server_link: 'your server link here',
+    pin_links: {
         //add the page title and the URL/issue_Id to pin these pages
         //example:
         //RSS : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
         //About me : "1"
     },
-    friends : {
+    friends: {
         //add your friends link here
         //example:
         //imuncle : 'https://imuncle.github.io',
     },
+    icons: {
+        //add your footer icons here
+        //you can set a jump link or display an image
+        //template :
+        //the title of the icon : {
+        //  icon_src : 'the image of the icon',
+        //  href : 'the link you want to jump',
+        //  hidden_img : 'the image you want to show',
+        //  width : the width of the hidden_img, this should be a number.(unit : px)
+        //}
+        //example :
+        //Github : {
+        //    icon_src : 'images/github.svg',
+        //    href : 'https://github.com/imuncle',
+        //    hidden_img : null,
+        //    width : 0
+        //}
+    }
 };
 ```
 将自己的个人信息填写进去。
@@ -76,6 +94,7 @@ instruction|填写你的个人网站的简介
 server_link|填写你的服务端地址，若没有服务器可填写'http://119.23.8.25/gh-oauth-server.php'
 pin_links|填写需要固定在右侧菜单中的显示名称和对应的issue号/任意链接
 friends|填写你的网站的友链，若没有则不填写
+icons|填写网站页脚的图标信息，若没有则不填写
 
 上面的server_link是服务端的地址，，因为访问用户的access_token必须通过服务端访问，详情可见[这篇文章](https://imuncle.github.io/content.html?id=22)。这个服务端使用PHP编写，只负责请求用户的access_token，不会存储任何数据。详见源代码（在本仓库的**server**文件夹里）。
 
@@ -109,12 +128,13 @@ github.svg|GitHub图标
 house1.png|404页面
 house2.png|404页面
 page_backfround.jpg|首页的背景图
+search.svg|右上角搜索图标
+totop.png|右下角“回到顶部”按钮图标
 
 如果没有前端知识，建议更改图片时不要更改文件名。
 
 ## 不足
 - client_id和client_secret直接写在了JavaScript中，不是太安全。
-- 页面底部的导航未封装，只能手动配置，稍微需要一些前端知识。
 - 欢迎提issue，也欢迎PR~
 
 ## 许可
