@@ -85,7 +85,7 @@ pin_links|Fill in the title and the corresponding issue_id/any URL that need to 
 friends|Fill in the friendship chain of your website (optional)
 icons|Fill in the informations of the icons that you want to show at the bottom (optional)
 
-The server_link above is the address of the server, because the access_token of the accessing user must be accessed through the server. Details can be found in [this article] (https://imuncle.github.io/content.html?id=22). This server is written in PHP and is only responsible for requesting the user's access_token and does not store any data. See the source code (in the **server** folder of this repository). 
+The server_link above is the address of the server, because the access_token of the accessing user must be accessed through the server. Details can be found in [this article] (https://imuncle.github.io/content.html?id=22). This server is written in PHP and is only responsible for requesting the user's access_token and does not store any data. See the [source code](https://github.com/imuncle/gitblog/blob/master/server/gh-oauth-server.php).
 
 If you have a server, you can use the PHP code to configure the server yourself and write **server_link** as your server address.
 
