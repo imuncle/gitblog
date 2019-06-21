@@ -42,11 +42,16 @@
     opacity:0;
     transition: all 0.4s;
 }
-.main-navication a, .main-navication a:hover {
+.main-navication a {
     display: block;
     padding: 0 15px;
     color: white;
     text-decoration: none;
+}
+.main-navication a:hover {
+    display: block;
+    padding: 0 15px;
+    color: white;
 }
 .main-navication span {
     font-size: 12px;
@@ -79,9 +84,6 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
     margin-top: 40px;
     text-align: center;
 }
-.post-tags a {
-    text-decoration: none;
-}
 .post-tags a, .post-tags a:hover {
     display: inline-block;
     margin-right: 10px;
@@ -90,6 +92,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
     word-wrap: break-word;
     background-color: transparent;
     color: #555;
+    text-decoration: none;
     outline: none;
     border-bottom: 1px solid #999;
     cursor: pointer;
