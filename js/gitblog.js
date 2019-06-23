@@ -63,7 +63,7 @@ var gitblog = function(options) {
 
     self.set = function(options) {
         if (self.getUrlParam('id') != undefined) {
-            self.options.id = self.getUrlParam('id');
+            self.options.id = parseInt(self.getUrlParam('id'));
         }
         if (self.getUrlParam('label') != undefined) {
             self.options.label = self.getUrlParam('label');
@@ -72,7 +72,7 @@ var gitblog = function(options) {
             self.options.q = self.getUrlParam('q');
         }
         if (self.getUrlParam('page') != undefined) {
-            self.options.page = self.getUrlParam('page');
+            self.options.page = parseInt(self.getUrlParam('page'));
         }
         if (self.getUrlParam('access_token') != undefined) {
             self.options.token = self.getUrlParam('access_token');
@@ -180,35 +180,29 @@ var gitblog = function(options) {
                     if (config.icons[i].href != undefined && config.icons[i].href != null) {
                         footer.icons += '<a target="_blank" title="' + i + '" href="' + config.icons[i].href + '"><img src="' + config.icons[i].icon_src + '" style="width:50px;margin-left:10px;margin-right:10px"></a>';
                     } else {
-                        /*footer.icons += '<img src="'+config.icons[i].icon_src+'" title="'+i+'" id="icon_'+i+'" style="width:50px;margin-left:10px;margin-right:10px">';
-                        if(config.icons[i].hidden_img != undefined && config.icons[i].hidden_img != null) {
-                            console.log(i);
-                            $('#icon_'+i).mouseover(function() {
-                                footer.changeIcon(i, 'show');
-                                console.log('show');
-                            });
-                            $('#icon_'+i).mouseout('onmouseout', function() {
-                                footer.changeIcon(i, 'hidden');
-                                console.log('hidden');
-                            });
-                            var left = Object.keys(config.icons).length*35-70*footer.icon_num+config.icons[i].width/2-35;
-                            footer.icons += '<img id="'+i+'" src="'+config.icons[i].hidden_img+'" style="width: '+config.icons[i].width+'px; position: absolute; left: calc(50% - '+left+'px); bottom: 180px; transition: all 0.3s ease 0s; box-shadow: rgb(149, 165, 166) 0px 0px 5px; transform: translateY(-20px); z-index: -1; opacity: 0;">';
-                        }
-                        你妈的为什么不行
-                        */
-                        if (config.icons[i].hidden_img == undefined || config.icons[i].hidden_img == null) {
-                            footer.icons += '<img src="' + config.icons[i].icon_src + '" title="' + i + '" style="width:50px;margin-left:10px;margin-right:10px">';
-                        } else {
-                            footer.icons += '<img src="' + config.icons[i].icon_src + '" title="' + i + '" onmouseover="blog.footer.changeIcon(' + "'" + i + "'" + ', ' + "'show'" + ')" onmouseout="blog.footer.changeIcon(' + "'" + i + "'" + ', ' + "'hidden'" + ')" style="width:50px;margin-left:10px;margin-right:10px">';
-                            var left = Object.keys(config.icons).length * 35 - 70 * footer.icon_num + config.icons[i].width / 2 - 35;
-                            footer.icons += '<img id="' + i + '" src="' + config.icons[i].hidden_img + '" style="width: ' + config.icons[i].width + 'px; position: absolute; left: calc(50% - ' + left + 'px); bottom: 180px; transition: all 0.3s ease 0s; box-shadow: rgb(149, 165, 166) 0px 0px 5px; transform: translateY(-20px); z-index: -1; opacity: 0;">';
-                        }
+                        footer.icons += '<img src="' + config.icons[i].icon_src + '" title="' + i + '" id="icon_' + i + '" style="width:50px;margin-left:10px;margin-right:10px;cursor:pointer">';
+                    }
+                    if (config.icons[i].hidden_img != undefined && config.icons[i].hidden_img != null) {
+                        var left = Object.keys(config.icons).length * 35 - 70 * footer.icon_num + config.icons[i].width / 2 - 35;
+                        footer.icons += '<img id="' + i + '" src="' + config.icons[i].hidden_img + '" style="width: ' + config.icons[i].width + 'px; position: absolute; left: calc(50% - ' + left + 'px); bottom: 180px; transition: all 0.3s ease 0s; box-shadow: rgb(149, 165, 166) 0px 0px 5px; transform: translateY(-20px); z-index: -1; opacity: 0">';
                     }
                     footer.icons += '</div>';
                     footer.icon_num++;
                 }
             }
             document.getElementById('icon').innerHTML = footer.icons;
+            for (var i in config.icons) {
+                if (config.icons[i].icon_src != undefined && config.icons[i].icon_src != null) {
+                    if (config.icons[i].hidden_img != undefined && config.icons[i].hidden_img != null) {
+                        $('#icon_' + i).mouseover(function() {
+                            footer.changeIcon(i, 'show');
+                        });
+                        $('#icon_' + i).mouseout(function() {
+                            footer.changeIcon(i, 'hidden');
+                        });
+                    }
+                }
+            }
         },
         changeIcon: function(id, action) {
             if (action == 'show') {
@@ -231,6 +225,7 @@ var gitblog = function(options) {
         this.page = 1;
         this.pages = 1;
         this.itemNum = 0;
+        this.pageLimit = 7;
     }
 
     Pages.prototype = {
@@ -266,13 +261,45 @@ var gitblog = function(options) {
             var page = this;
             $('#pages').css('display', 'inline-block');
             document.getElementById('pages').innerHTML = '<li id="last_page"><a id="last" style="cursor: pointer">«</a></li>';
+            if (page.pages <= page.pageLimit) {
+                for (var i = 1; i <= page.pages; i++) {
+                    document.getElementById('pages').innerHTML += '<li><a id="page' + i + '" style="cursor:pointer">' + i + '</a></li>';
+                }
+            } else {
+                if (page.page >= 5) {
+                    document.getElementById('pages').innerHTML += '<li><a id="page1" style="cursor:pointer">1</a></li>';
+                    document.getElementById('pages').innerHTML += '<li><a style="cursor:pointer;pointer-events: none;">...</a></li>';
+                    document.getElementById('pages').innerHTML += '<li><a id="page' + (page.page - 1) + '" style="cursor:pointer">' + (page.page - 1) + '</a></li>';
+                    document.getElementById('pages').innerHTML += '<li><a id="page' + page.page + '" style="cursor:pointer">' + page.page + '</a></li>';
+                } else {
+                    for (var i = 1; i <= page.page; i++) {
+                        document.getElementById('pages').innerHTML += '<li><a id="page' + i + '" style="cursor:pointer">' + i + '</a></li>';
+                    }
+                }
+                if (page.page <= page.pages - 4) {
+                    document.getElementById('pages').innerHTML += '<li><a id="page' + (page.page + 1) + '" style="cursor:pointer">' + (page.page + 1) + '</a></li>';
+                    document.getElementById('pages').innerHTML += '<li><a style="cursor:pointer;pointer-events: none;">...</a></li>';
+                    document.getElementById('pages').innerHTML += '<li><a id="page' + page.pages + '" style="cursor:pointer">' + page.pages + '</a></li>';
+                } else {
+                    for (var i = page.page + 1; i <= page.pages; i++) {
+                        document.getElementById('pages').innerHTML += '<li><a id="page' + i + '" style="cursor:pointer">' + i + '</a></li>';
+                    }
+                }
+            }
+            document.getElementById('pages').innerHTML += '<li id="next_page"><a id="next" style="cursor: pointer">»</a></li>';
             for (var i = 1; i <= page.pages; i++) {
                 if (self.options.label != undefined) {
-                    document.getElementById('pages').innerHTML += '<li><a id="page' + i + '" href="?label=' + self.options.label + '&page=' + i + '">' + i + '</a></li>';
+                    $('#page' + i).click(function() {
+                        window.location.href = "?label=" + self.options.label + "&page=" + this.innerHTML;
+                    });
                 } else if (self.options.id != undefined) {
-                    document.getElementById('pages').innerHTML += '<li><a id="page' + i + '" href="?id=' + self.options.id + '&page=' + i + '">' + i + '</a></li>';
+                    $('#page' + i).click(function() {
+                        window.location.href = "?id=" + self.options.id + "&page=" + this.innerHTML;
+                    });
                 } else {
-                    document.getElementById('pages').innerHTML += '<li><a id="page' + i + '" href="?page=' + i + '">' + i + '</a></li>';
+                    $('#page' + i).click(function() {
+                        window.location.href = "?page=" + this.innerHTML;
+                    });
                 }
                 if (i == page.page) {
                     $('#page' + i).addClass('active');
@@ -280,7 +307,6 @@ var gitblog = function(options) {
                     $('#page' + i).removeClass('active');
                 }
             }
-            document.getElementById('pages').innerHTML += '<li id="next_page"><a id="next" style="cursor: pointer">»</a></li>';
             if (page.page == 1) {
                 $('#last_page').css('pointer-events', 'none');
                 $('#next_page').css('pointer-events', 'auto');
