@@ -1,10 +1,10 @@
 {
-    "name": "your github username",
-    "repo": "your github reponame",
-    "client_id": "your client_id here",
-    "client_secret": "your client_secret here",
-    "title": "add your title",
-    "instruction": "add your instruction",
+    "name": "imuncle",
+    "repo": "gitblog",
+    "client_id": "4148cca0f91e524d1a42",
+    "client_secret": "637c2c993cccf79c51a0a215f538932edfdcb9b0",
+    "title": "Gitblog",
+    "instruction": "基于GitHub issue的个人博客模板",
     "server_link": "http://119.23.8.25/gh-oauth-server.php",
     "pin_links": {
     },
@@ -14,7 +14,7 @@
     "icons": {
         "Github" : {
             "icon_src" : "images/github.svg",
-            "href" : "https://github.com/imuncle",
+            "href" : "https://github.com/imuncle/gitblog",
             "hidden_img" : null,
             "width" : 0
         }

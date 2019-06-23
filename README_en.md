@@ -1,7 +1,7 @@
 ﻿# gitblog
 This is a very small personal blog template bsaed on git issues for anyone who wants to build a personal blog on GitHub pages.
 
-Demo page: [大叔的个人小站](https://imuncle.github.io)
+[Demo page](https://imuncle.github.io/gitblog)
 
 [中文](README.md)
 
@@ -108,7 +108,7 @@ By changing the `strings`, you can make your own dynamic typing. For more inform
 All the images are stored in **images** folder. You can change them at will.
 
 ### Dependence
-* [gitmment](https://github.com/imsun/gitment)
+* [gitment](https://github.com/imsun/gitment)
 * [MathJax](https://www.mathjax.org/)
 * [jQuery](http://www.jquery.org/)
 * [Bootstrap](http://www.getbootstrap.com/)

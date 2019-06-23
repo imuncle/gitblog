@@ -1,7 +1,7 @@
 ﻿# gitblog
 这是一个极轻量级的，基于git issue的个人博客模板，非常适合于想在GitHub pages上搭建个人博客的人。
 
-示例页面：[大叔的个人小站](https://imuncle.github.io)
+[示例页面](https://imuncle.github.io/gitblog)
 
 [English](README_en.md)
 
@@ -135,7 +135,7 @@ totop.png|右下角“回到顶部”按钮图标
 如果没有前端知识，建议更改图片时不要更改文件名。
 
 ## 依赖
-* [gitmment](https://github.com/imsun/gitment)
+* [gitment](https://github.com/imsun/gitment)
 * [MathJax](https://www.mathjax.org/)
 * [jQuery](http://www.jquery.org/)
 * [Bootstrap](http://www.getbootstrap.com/)
