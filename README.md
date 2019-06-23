@@ -42,7 +42,7 @@ git clone "https:/github.com/imuncle/gitblog"
 ## 个性化定制
 ### 基本配置
 修改**config.json**：
-```json
+```js
 {
     "name": "your github username",
     "repo": "your github reponame",
@@ -134,9 +134,7 @@ totop.png|右下角“回到顶部”按钮图标
 
 如果没有前端知识，建议更改图片时不要更改文件名。
 
-## 不足
-- client_id和client_secret直接写在了JavaScript中，不是太安全。
-- 欢迎提issue，也欢迎PR~
+欢迎提issue，也欢迎PR~
 
 ## 许可
 MIT LICENSE

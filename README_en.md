@@ -30,7 +30,7 @@ You'll get **client_id** and **client_secret** finally.
 ## Personalized customization
 ### Basic configuration
 In **config.json**:
-```json
+```js
 {
     "name": "your github username",
     "repo": "your github reponame",
