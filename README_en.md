@@ -107,5 +107,12 @@ By changing the `strings`, you can make your own dynamic typing. For more inform
 ### Images
 All the images are stored in **images** folder. You can change them at will.
 
+### Dependence
+* [gitmment](https://github.com/imsun/gitment)
+* [MathJax](https://www.mathjax.org/)
+* [jQuery](http://www.jquery.org/)
+* [Bootstrap](http://www.getbootstrap.com/)
+* [type.js](https://github.com/mattboldt/typed.js)
+
 ## LICENSE
 MIT LICENSE

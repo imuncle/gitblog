@@ -134,6 +134,13 @@ totop.png|右下角“回到顶部”按钮图标
 
 如果没有前端知识，建议更改图片时不要更改文件名。
 
+## 依赖
+* [gitmment](https://github.com/imsun/gitment)
+* [MathJax](https://www.mathjax.org/)
+* [jQuery](http://www.jquery.org/)
+* [Bootstrap](http://www.getbootstrap.com/)
+* [type.js](https://github.com/mattboldt/typed.js)
+
 欢迎提issue，也欢迎PR~
 
 ## 许可

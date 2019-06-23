@@ -663,9 +663,7 @@ var gitblog = function(config) {
         }
     }
 
-    var Buttons = function() {
-
-}
+    var Buttons = function() {}
 
     Buttons.prototype = {
         init: function() {
