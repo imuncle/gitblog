@@ -1,47 +1,4 @@
-var config = {
-    name: "your github username",
-    repo: "your github reponame",
-    client_id: "your client_id here",
-    client_secret: "your client_secret here",
-    title: "add your title",
-    instruction: "add your instruction",
-    server_link: 'your server link here',
-    pin_links: {
-        //add the page title and the URL/issue_Id to pin these pages
-        //example:
-        //RSS : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
-        //About me : "1"
-    },
-    friends: {
-        //add your friends link here
-        //example:
-        //imuncle : 'https://imuncle.github.io',
-    },
-    icons: {
-        //add your footer icons here
-        //you can set a jump link or display an image
-        //template :
-        //the title of the icon : {
-        //  icon_src : 'the image of the icon',
-        //  href : 'the link you want to jump',
-        //  hidden_img : 'the image you want to show',
-        //  width : the width of the hidden_img, this should be a number.(unit : px)
-        //}
-        //example :
-        //Github : {
-        //    icon_src : 'images/github.svg',
-        //    href : 'https://github.com/imuncle',
-        //    hidden_img : null,
-        //    width : 0
-        //}
-    }
-};
-
-String.prototype.replaceAll = function(a, b) {
-    return this.replace(new RegExp(a, 'gm'), b);
-}
-
-var gitblog = function(options) {
+var gitblog = function(config) {
     var self = this;
 
     self.getUrlParam = function(name) {
@@ -61,7 +18,7 @@ var gitblog = function(options) {
         redirect_url: null,
     }
 
-    self.set = function(options) {
+    self.set = function() {
         if (self.getUrlParam('id') != undefined) {
             self.options.id = parseInt(self.getUrlParam('id'));
         }
@@ -87,20 +44,18 @@ var gitblog = function(options) {
         if (self.options.code != null && self.options.redirect_url != null) {
             window.location.href = config.server_link + "?code=" + self.options.code + "&redirect_url=" + self.options.redirect_url + "&client_id=" + config.client_id + "&client_secret=" + config.client_secret;
         }
-
-        for (var i in options) {
-            if (self.options[i] != undefined) {
-                self.options[i] = options[i];
-            }
-        }
     }
 
-    self.set(options);
+    self.set();
 
     self.utc2localTime = function(time) {
         var time_string_utc_epoch = Date.parse(time);
         var unixTimestamp = new Date(time_string_utc_epoch);
         return unixTimestamp.toLocaleString();
+    }
+
+    String.prototype.replaceAll = function(a, b) {
+        return this.replace(new RegExp(a, 'gm'), b);
     }
 
     var Info = function() {
@@ -783,8 +738,15 @@ var gitblog = function(options) {
         self.button = new Buttons();
         self.button.init();
     }
-
-    self.init();
 }
 
-var blog = new gitblog();
+$.ajax({
+    type: 'get',
+    headers: {
+        Accept: 'application/json',
+    },
+    url: 'config.json',
+    success: function(data) {
+        new gitblog(data).init();
+    }
+});

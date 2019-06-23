@@ -32,7 +32,7 @@
 }
 .main-navication {
     margin: 0;
-    padding: 50px 0 0;
+    padding: 30px 0 0;
     background: #2c3e50;
     width: 150px;
     position: fixed;
@@ -41,6 +41,7 @@
     bottom: 0;
     opacity:0;
     transition: all 0.4s;
+    overflow: auto;
 }
 .main-navication a, .main-navication a:visited {
     display: block;
@@ -70,7 +71,6 @@ ul.pagination li {display: inline;}
 ul.pagination li a {
     color: black;
     float: left;
-    padding: 8px 16px;
     text-decoration: none;
     border:transparent;
 }

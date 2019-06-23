@@ -41,46 +41,46 @@ git clone "https:/github.com/imuncle/gitblog"
 
 ## 个性化定制
 ### 基本配置
-在**gitblog.js**中，找到如下代码：
-```js
-var config = {
-    name: "your github username",
-    repo: "your github reponame",
-    client_id: "your client_id here",
-    client_secret: "your client_secret here",
-    title: "add your title",
-    instruction: "add your instruction",
-    server_link: 'your server link here',
-    pin_links: {
+修改**config.json**：
+```json
+{
+    "name": "your github username",
+    "repo": "your github reponame",
+    "client_id": "your client_id here",
+    "client_secret": "your client_secret here",
+    "title": "add your title",
+    "instruction": "add your instruction",
+    "server_link": "http://119.23.8.25/gh-oauth-server.php",
+    "pin_links": {
         //add the page title and the URL/issue_Id to pin these pages
         //example:
         //RSS : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
-        //About me : "1"
+        //About me : "1" (must be a string not a number)
     },
-    friends: {
+    "friends": {
         //add your friends link here
         //example:
-        //imuncle : 'https://imuncle.github.io',
+        //imuncle : "https://imuncle.github.io"
     },
-    icons: {
+    "icons": {
         //add your footer icons here
         //you can set a jump link or display an image
         //template :
-        //the title of the icon : {
-        //  icon_src : 'the image of the icon',
-        //  href : 'the link you want to jump',
-        //  hidden_img : 'the image you want to show',
-        //  width : the width of the hidden_img, this should be a number.(unit : px)
+        //"the title of the icon" : {
+        //  "icon_src" : "the image of the icon",
+        //  "href" : "the link you want to jump",
+        //  "hidden_img" : "the image you want to show",
+        //  "width" : the width of the hidden_img, this should be a number.(unit : px)
         //}
         //example :
-        //Github : {
-        //    icon_src : 'images/github.svg',
-        //    href : 'https://github.com/imuncle',
-        //    hidden_img : null,
-        //    width : 0
+        //"Github" : {
+        //    "icon_src" : "images/github.svg",
+        //    "href" : "https://github.com/imuncle",
+        //    "hidden_img" : null,
+        //    'width" : 0
         //}
     }
-};
+}
 ```
 将自己的个人信息填写进去。
 
