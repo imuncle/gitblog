@@ -42,7 +42,7 @@
     opacity:0;
     transition: all 0.4s;
 }
-.main-navication a {
+.main-navication a, .main-navication a:visited {
     display: block;
     padding: 0 15px;
     color: white;
