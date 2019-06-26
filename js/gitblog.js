@@ -119,44 +119,31 @@ var gitblog = function(config) {
         }
     }
 
-    var Footer = function() {
-        this.page = new Pages();
-        this.icons = '';
-        this.icon_num = 0;
-        this.content = 'Powered by <a href="https://github.com/imuncle/gitblog" target="_blank" style="color: aquamarine;text-decoration:none;border-bottom: 1px solid #79f8d4;">gitblog</a>';
+    var Icon = function(options, name, left) {
+        this.icon_src = options.icon_src;
+        this.href = options.href;
+        this.hidden_img = options.hidden_img;
+        this.width = options.width;
+        this.name = name;
+        this.position = left;
     }
 
-    Footer.prototype = {
-        showIcon: function() {
-            var footer = this;
-            for (var i in config.icons) {
-                if (config.icons[i].icon_src != undefined && config.icons[i].icon_src != null) {
-                    footer.icons += '<div style=" padding-inline-start: 0;margin: 0;">';
-                    if (config.icons[i].href != undefined && config.icons[i].href != null) {
-                        footer.icons += '<a target="_blank" title="' + i + '" href="' + config.icons[i].href + '"><img src="' + config.icons[i].icon_src + '" style="width:50px;margin-left:10px;margin-right:10px"></a>';
-                    } else {
-                        footer.icons += '<img src="' + config.icons[i].icon_src + '" title="' + i + '" id="icon_' + i + '" style="width:50px;margin-left:10px;margin-right:10px;cursor:pointer">';
-                    }
-                    if (config.icons[i].hidden_img != undefined && config.icons[i].hidden_img != null) {
-                        var left = Object.keys(config.icons).length * 35 - 70 * footer.icon_num + config.icons[i].width / 2 - 35;
-                        footer.icons += '<img id="' + i + '" src="' + config.icons[i].hidden_img + '" style="width: ' + config.icons[i].width + 'px; position: absolute; left: calc(50% - ' + left + 'px); bottom: 180px; transition: all 0.3s ease 0s; box-shadow: rgb(149, 165, 166) 0px 0px 5px; transform: translateY(-20px); z-index: -1; opacity: 0">';
-                    }
-                    footer.icons += '</div>';
-                    footer.icon_num++;
-                }
+    Icon.prototype = {
+        init: function() {
+            var icon = this;
+            if(icon.href != undefined && icon.href != null) {
+                document.getElementById("div_"+icon.name).innerHTML += '<a target="_blank" title="' + icon.name + '" id="icon_' + icon.name + '" href="' + icon.href + '"><img src="' + icon.icon_src + '" style="width:50px;margin-left:10px;margin-right:10px"></a>';
+            } else {
+                document.getElementById("div_"+icon.name).innerHTML += '<img src="' + icon.icon_src + '" title="' + icon.name + '" id="icon_' + icon.name + '" style="width:50px;margin-left:10px;margin-right:10px;cursor:pointer">';
             }
-            document.getElementById('icon').innerHTML = footer.icons;
-            for (var i in config.icons) {
-                if (config.icons[i].icon_src != undefined && config.icons[i].icon_src != null) {
-                    if (config.icons[i].hidden_img != undefined && config.icons[i].hidden_img != null) {
-                        $('#icon_' + i).mouseover(function() {
-                            footer.changeIcon(i, 'show');
-                        });
-                        $('#icon_' + i).mouseout(function() {
-                            footer.changeIcon(i, 'hidden');
-                        });
-                    }
-                }
+            if (icon.hidden_img != undefined && icon.hidden_img != null) {
+                document.getElementById("div_"+icon.name).innerHTML += '<img id="' + icon.name + '" src="' + icon.hidden_img + '" style="width: ' + icon.width + 'px; position: absolute; left: calc(50% - ' + this.position + 'px); bottom: 180px; transition: all 0.3s ease 0s; box-shadow: rgb(149, 165, 166) 0px 0px 5px; transform: translateY(-20px); z-index: -1; opacity: 0">';
+                $('#icon_' + icon.name).mouseover(function() {
+                    icon.changeIcon(icon.name, 'show');
+                });
+                $('#icon_' + icon.name).mouseout(function() {
+                    icon.changeIcon(icon.name, 'hidden');
+                });
             }
         },
         changeIcon: function(id, action) {
@@ -168,6 +155,33 @@ var gitblog = function(config) {
                 $('#' + id).css('z-index', '-1');
                 $('#' + id).css("opacity", "0");
                 $('#' + id).css("transform", "translateY(-20px)");
+            }
+        }
+    }
+
+    var Footer = function() {
+        this.page = new Pages();
+        this.icons = [];
+        this.icon_num = 0;
+        this.content = 'Powered by <a href="https://github.com/imuncle/gitblog" target="_blank" style="color: aquamarine;text-decoration:none;border-bottom: 1px solid #79f8d4;">gitblog</a>';
+    }
+
+    Footer.prototype = {
+        showIcon: function() {
+            var footer = this;
+            for (var i in config.icons) {
+                if (config.icons[i].icon_src != undefined && config.icons[i].icon_src != null) {
+                    document.getElementById('icon').innerHTML += '<div style="padding-inline-start: 0;margin: 0" id="div_'+i+'"></div>';
+                }
+            }
+            for (var i in config.icons) {
+                if (config.icons[i].icon_src != undefined && config.icons[i].icon_src != null) {
+                    var left = Object.keys(config.icons).length * 35 - 70 * footer.icon_num + config.icons[i].width / 2 - 35;
+                    var icon = new Icon(config.icons[i], i, left);
+                    icon.init();
+                    footer.icons.push(icon);
+                    footer.icon_num++;
+                }
             }
         },
         show: function() {
@@ -736,6 +750,8 @@ var gitblog = function(config) {
         self.button = new Buttons();
         self.button.init();
     }
+
+    console.log('\n' + ' %c Gitblog' + ' %c https://github.com/imuncle/gitblog \n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;');
 }
 
 $.ajax({
