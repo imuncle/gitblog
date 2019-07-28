@@ -81,6 +81,7 @@
   <script src="js/gitblog.js"></script>
   <script>
     (function(){
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
       setInterval(function() {
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
       }, 500);
