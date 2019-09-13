@@ -12,6 +12,7 @@
 - [x] 文章设置标签
 - [x] 文章搜索功能
 - [x] 文章、评论点赞功能（不能取消点赞 :stuck_out_tongue_winking_eye:
+- [x] 博客API接口，可输出`json`格式信息，方便用户进行开发客户端等操作。具体接口使用见说明底部。
 
 博客本身没有发表文章的接口，而是在GitHub的issue页面直接new issue。
 
@@ -133,6 +134,231 @@ search.svg|右上角搜索图标
 totop.png|右下角“回到顶部”按钮图标
 
 如果没有前端知识，建议更改图片时不要更改文件名。
+
+## API接口
+API接口的实现见[api.html](https://github.com/imuncle/gitblog/blob/master/api.html)，通过访问该文件获取信息，使用url参数指定获取的信息内容。具体的用法如下。
+
+### 获取菜单信息
+```javascript
+$.ajax({
+    type: 'get',
+    headers: {
+        Accept: 'application/json',
+    },
+    url: 'your domain name' + 'api.html?menu=menu',
+    success: function(data) {
+        //your code here
+    }
+});
+```
+
+返回的数据格式如下：
+```json
+[
+	{
+		"name": "AI"
+	},
+	{
+		"name": "Project"
+	},
+	{
+		"name": "RM"
+	},
+	{
+		"name": "ROS"
+	},
+	{
+		"name": "other"
+	},
+	{
+		"name": "tools"
+	},
+	{
+		"name": "web"
+	}
+]
+```
+
+### 获取文章列表
+获取文章列表分为三种模式：一种是无筛选的普通模式，一种是按标签（label）筛选的标签模式，一种是按搜索内容筛选的搜索模式。三种模式都支持分页模式。
+```javascript
+var request_url = 'your domain name' + 'api.html?';
+request_url += 'page=1';    //普通模式
+request_url += 'label=RM&page=1';   //标签模式
+request_url += 'q=姿态解析&page=1'; //搜索模式
+$.ajax({
+    type: 'get',
+    headers: {
+        Accept: 'application/json',
+    },
+    url: request_url,
+    success: function(data) {
+        //your code here
+    }
+});
+```
+> 注：以上代码中`page`参数均为可选。
+
+返回的数据格式如下：
+```json
+{
+	"page": 4,
+	"page_num": 8,
+	"article": [
+		{
+			"id": 48,
+			"time": "2019/4/7 23:00:49",
+			"title": "STM32 flash读写",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 47,
+			"time": "2019/4/5 01:58:44",
+			"title": "WS2811驱动",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 46,
+			"time": "2019/4/1 18:57:58",
+			"title": "DS18B20温度传感器数据读取",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "other"
+				}
+			]
+		},
+		{
+			"id": 45,
+			"time": "2019/4/1 18:01:15",
+			"title": "HAL库实现us级延时",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "other"
+				}
+			]
+		},
+		{
+			"id": 44,
+			"time": "2019/4/1 10:00:40",
+			"title": "MPU9250六轴算法",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 43,
+			"time": "2019/3/30 09:19:57",
+			"title": "MATLAB串口通信GUI程序",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "other"
+				}
+			]
+		},
+		{
+			"id": 42,
+			"time": "2019/3/24 12:01:25",
+			"title": "网站搜索功能",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "web"
+				}
+			]
+		},
+		{
+			"id": 40,
+			"time": "2019/3/19 15:19:52",
+			"title": "RM2018的奋斗",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略... ",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 39,
+			"time": "2019/3/18 18:03:35",
+			"title": "MPU9250姿态解析",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 38,
+			"time": "2019/3/10 19:03:28",
+			"title": "生成漂亮的代码分享图",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "tools"
+				}
+			]
+		}
+	]
+}
+```
+> 注：默认一页显示10篇文章
+
+### 获取文章内容
+这是获取文章的详细内容。**注意**，这里返回的是**HTML格式**的文章内容，而`获取文章列表`拿到的是**Markdown格式**的文章内容。使用方法如下：
+```javascript
+$.ajax({
+    type: 'get',
+    headers: {
+        Accept: 'application/json',
+    },
+    url: 'your domain name' + 'api.html?id=1',
+    success: function(data) {
+        //your code here
+    }
+});
+```
+
+返回的数据格式如下：
+```json
+{
+	"title": "博客搭建过程",
+	"time": "2019/2/5 16:33:06",
+	"content": "文章内容太多了，此处省略...",
+	"labels": [
+		{
+			"name": "web"
+		}
+	],
+	"like": 0
+}
+```
 
 ## 依赖
 * [gitment](https://github.com/imsun/gitment)

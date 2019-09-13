@@ -11,6 +11,7 @@ This is a very small personal blog template bsaed on git issues for anyone who w
 - [x] Set labels for article
 - [x] Search for aticle
 - [x] Like an article or comment
+- [x] API. It can output 'json' format information. Using methods are at the bottom of README.
 
 You can publish your article in Github issues page, just click 'New issue'.
 
@@ -106,6 +107,231 @@ By changing the `strings`, you can make your own dynamic typing. For more inform
 
 ### Images
 All the images are stored in **images** folder. You can change them at will.
+
+## API
+The details of implementing can be found in [api.html](https://github.com/imuncle/gitblog/blob/master/api.html).
+
+### Get menu lists
+```javascript
+$.ajax({
+    type: 'get',
+    headers: {
+        Accept: 'application/json',
+    },
+    url: 'your domain name' + 'api.html?menu=menu',
+    success: function(data) {
+        //your code here
+    }
+});
+```
+
+The format of json are as follows:
+```json
+[
+	{
+		"name": "AI"
+	},
+	{
+		"name": "Project"
+	},
+	{
+		"name": "RM"
+	},
+	{
+		"name": "ROS"
+	},
+	{
+		"name": "other"
+	},
+	{
+		"name": "tools"
+	},
+	{
+		"name": "web"
+	}
+]
+```
+
+### Get the article list
+There are 3 modes：Normal Mode(no screening)，Label Mode(screening by label)，Search Mode(screening by search).
+```javascript
+var request_url = 'your domain name' + 'api.html?';
+request_url += 'page=1';    //Normal Mode
+request_url += 'label=RM&page=1';   //Label Mode
+request_url += 'q=姿态解析&page=1'; //Search Mode
+$.ajax({
+    type: 'get',
+    headers: {
+        Accept: 'application/json',
+    },
+    url: request_url,
+    success: function(data) {
+        //your code here
+    }
+});
+```
+> Parameters of 'page' in the above code are optional.
+
+The format of json are as follows:
+```json
+{
+	"page": 4,
+	"page_num": 8,
+	"article": [
+		{
+			"id": 48,
+			"time": "2019/4/7 23:00:49",
+			"title": "STM32 flash读写",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 47,
+			"time": "2019/4/5 01:58:44",
+			"title": "WS2811驱动",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 46,
+			"time": "2019/4/1 18:57:58",
+			"title": "DS18B20温度传感器数据读取",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "other"
+				}
+			]
+		},
+		{
+			"id": 45,
+			"time": "2019/4/1 18:01:15",
+			"title": "HAL库实现us级延时",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "other"
+				}
+			]
+		},
+		{
+			"id": 44,
+			"time": "2019/4/1 10:00:40",
+			"title": "MPU9250六轴算法",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 43,
+			"time": "2019/3/30 09:19:57",
+			"title": "MATLAB串口通信GUI程序",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "other"
+				}
+			]
+		},
+		{
+			"id": 42,
+			"time": "2019/3/24 12:01:25",
+			"title": "网站搜索功能",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "web"
+				}
+			]
+		},
+		{
+			"id": 40,
+			"time": "2019/3/19 15:19:52",
+			"title": "RM2018的奋斗",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略... ",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 39,
+			"time": "2019/3/18 18:03:35",
+			"title": "MPU9250姿态解析",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "RM"
+				}
+			]
+		},
+		{
+			"id": 38,
+			"time": "2019/3/10 19:03:28",
+			"title": "生成漂亮的代码分享图",
+			"author": "imuncle",
+			"content": "文章内容太多了，此处省略...",
+			"labels": [
+				{
+					"name": "tools"
+				}
+			]
+		}
+	]
+}
+```
+> In default, each page displays 10 articles.
+
+### Get content of an article
+**Attention**: This returns the article content in **HTML format**, while 'Get the article list' gets the article content in **Markdown format**.
+```javascript
+$.ajax({
+    type: 'get',
+    headers: {
+        Accept: 'application/json',
+    },
+    url: 'your domain name' + 'api.html?id=1',
+    success: function(data) {
+        //your code here
+    }
+});
+```
+
+The format of json are as follows:
+```json
+{
+	"title": "博客搭建过程",
+	"time": "2019/2/5 16:33:06",
+	"content": "文章内容太多了，此处省略...",
+	"labels": [
+		{
+			"name": "web"
+		}
+	],
+	"like": 0
+}
+```
 
 ### Dependence
 * [gitment](https://github.com/imsun/gitment)
