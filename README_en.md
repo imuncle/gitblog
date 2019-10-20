@@ -17,7 +17,7 @@ You can publish your article in Github issues page, just click 'New issue'.
 
 The comments feature is referenced by [Gitment](https://github.com/imsun/gitment). I borrowed its css and rewrite the js doc.
 
-You can set labels for each article in Github issues page, and all the labels will become an item in menu. So be sure to delete the default labels that Github provide.
+You can set labels for each article in Github issues page.
 
 ## How to Start
 ### Get this repo
@@ -40,11 +40,12 @@ In **config.json**:
     "title": "add your title",
     "instruction": "add your instruction",
     "server_link": "http://119.23.8.25/gh-oauth-server.php",
-    "pin_links": {
-        //add the page title and the URL/issue_Id to pin these pages
-        //example:
-        //RSS : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
-        //About me : "1" (must be a string not a number)
+    "menu": {
+        //add your menu items and URL here
+		//example:
+		//"Home" : "./",
+        //"RSS" : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
+        //"About me" : "content.html?id=41"
     },
     "friends": {
         //add your friends link here
@@ -129,25 +130,44 @@ The format of json are as follows:
 ```json
 [
 	{
-		"name": "AI"
+		"name": "首页",
+		"url": "./"
 	},
 	{
-		"name": "Project"
+		"name": "机器学习",
+		"url": "issue_per_label.html?label=AI"
 	},
 	{
-		"name": "RM"
+		"name": "小项目",
+		"url": "issue_per_label.html?label=Project"
 	},
 	{
-		"name": "ROS"
+		"name": "RM比赛",
+		"url": "issue_per_label.html?label=RM"
 	},
 	{
-		"name": "other"
+		"name": "ROS学习",
+		"url": "issue_per_label.html?label=ROS"
 	},
 	{
-		"name": "tools"
+		"name": "小工具",
+		"url": "issue_per_label.html?label=tools"
 	},
 	{
-		"name": "web"
+		"name": "网页开发",
+		"url": "issue_per_label.html?label=web"
+	},
+	{
+		"name": "其他",
+		"url": "issue_per_label.html?label=other"
+	},
+	{
+		"name": "灵感想法",
+		"url": "https://imuncle.github.io/timeline"
+	},
+	{
+		"name": "关于我",
+		"url": "content.html?id=41"
 	}
 ]
 ```

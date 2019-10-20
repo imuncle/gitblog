@@ -112,8 +112,9 @@ var gitblog = function(config) {
         },
         show: function() {
             var menu = this;
-            menu.getItem();
-            document.getElementById('menu').innerHTML += '<li><a href="./"><span>首页</span></a></li>';
+            for(var name in config.menu) {
+                document.getElementById("menu").innerHTML += '<li><a href=' + config.menu[name] + '><span>' + name + '</span></a></li>';
+            }
             if (Object.keys(config.friends).length != 0) {
                 var menu_friend = document.getElementById("friends");
                 menu_friend.innerHTML = '<li><text style="font-zise:14px"><span style="color: white;transform:translateX(4px)">友链：</span></text></li>';

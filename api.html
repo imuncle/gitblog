@@ -105,19 +105,23 @@ var api = function(config) {
         } else if(self.options.menu != null) {
             $.ajax({
                 type: 'get',
-                async: false,
-                url: 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/labels',
+                headers: {
+                    Accept: 'application/json',
+                },
+                url: 'config.json',
                 success: function(data) {
                     self.info = new Array();
-                    for (var i in data) {
+                    for (var i in data.menu) {
                         var label = new Object();
-                        label.name = data[i].name;
+                        label.name = i;
+                        label.url = data.menu[i];
+                        console.log(label)
                         self.info.push(label);
                     }
-                },
+                    self.info = JSON.stringify(self.info, null, "\t");
+                    document.getElementById('data').innerHTML = self.info;
+                }
             });
-            self.info = JSON.stringify(self.info, null, "\t");
-            document.getElementById('data').innerHTML = self.info;
         } else {
             var issue_url;
             var issue_perpage_url;

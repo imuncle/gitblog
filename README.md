@@ -18,7 +18,7 @@
 
 评论功能参考了[Gitment](https://github.com/imsun/gitment)，借用了Gitment的css样式，重写了JavaScript逻辑。评论功能基于GitHub的issue，支持Markdown语法，支持@功能，支持点赞功能。
 
-可以在GitHub上为每个文章指定标签label，每个label都会作为博客菜单里的一个子菜单项，所以请注意**删除仓库里默认的一些label**。
+可以在GitHub上为每个文章指定标签label。
 
 404页面模仿了GitHub自己的404页面，可点击[这里](https://imuncle.github.io/anything)查看404页面示例。
 
@@ -52,11 +52,12 @@ git clone "https:/github.com/imuncle/gitblog"
     "title": "add your title",
     "instruction": "add your instruction",
     "server_link": "http://119.23.8.25/gh-oauth-server.php",
-    "pin_links": {
-        //add the page title and the URL/issue_Id to pin these pages
-        //example:
-        //RSS : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
-        //About me : "1" (must be a string not a number)
+    "menu": {
+        //add your menu items and URL here
+		//example:
+		//"Home" : "./",
+        //"RSS" : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
+        //"About me" : "content.html?id=41"
     },
     "friends": {
         //add your friends link here
@@ -156,25 +157,44 @@ $.ajax({
 ```json
 [
 	{
-		"name": "AI"
+		"name": "首页",
+		"url": "./"
 	},
 	{
-		"name": "Project"
+		"name": "机器学习",
+		"url": "issue_per_label.html?label=AI"
 	},
 	{
-		"name": "RM"
+		"name": "小项目",
+		"url": "issue_per_label.html?label=Project"
 	},
 	{
-		"name": "ROS"
+		"name": "RM比赛",
+		"url": "issue_per_label.html?label=RM"
 	},
 	{
-		"name": "other"
+		"name": "ROS学习",
+		"url": "issue_per_label.html?label=ROS"
 	},
 	{
-		"name": "tools"
+		"name": "小工具",
+		"url": "issue_per_label.html?label=tools"
 	},
 	{
-		"name": "web"
+		"name": "网页开发",
+		"url": "issue_per_label.html?label=web"
+	},
+	{
+		"name": "其他",
+		"url": "issue_per_label.html?label=other"
+	},
+	{
+		"name": "灵感想法",
+		"url": "https://imuncle.github.io/timeline"
+	},
+	{
+		"name": "关于我",
+		"url": "content.html?id=41"
 	}
 ]
 ```
