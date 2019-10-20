@@ -54,8 +54,8 @@ git clone "https:/github.com/imuncle/gitblog"
     "server_link": "http://119.23.8.25/gh-oauth-server.php",
     "menu": {
         //add your menu items and URL here
-		//example:
-		//"Home" : "./",
+        //example:
+        //"Home" : "./",
         //"RSS" : "https://rsshub.app/github/issue/imuncle/imuncle.github.io",
         //"About me" : "content.html?id=41"
     },

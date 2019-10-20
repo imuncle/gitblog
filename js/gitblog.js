@@ -83,27 +83,6 @@ var gitblog = function(config) {
     }
 
     Menu.prototype = {
-        getItem: function() {
-            $.ajax({
-                type: 'get',
-                url: 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/labels',
-                success: function(data) {
-                    for (var i in data) {
-                        document.getElementById('menu').innerHTML += '<li><a href="issue_per_label.html?label=' + data[i].name + '"><span>' + data[i].name + '</span></a></li>';
-                    }
-                    for (var name in config.pin_links) {
-                        var targetUrl;
-                        //Check whether it is an external URL, if not, link to the corresponding page by issue_id
-                        if (config.pin_links[name].indexOf("http") == -1) {
-                            targetUrl = "content.html?id=" + config.pin_links[name];
-                        } else if (config.pin_links[name].indexOf("http") != -1) {
-                            targetUrl = config.pin_links[name];
-                        }
-                        document.getElementById('menu').innerHTML += '<li><a href="' + targetUrl + '"><span>' + name + '</span></a></li>';
-                    }
-                },
-            });
-        },
         searchOnblur: function() {
             if ($('.search-input').val() == "") {
                 $(".search-input").css("width", '42px');
@@ -513,7 +492,7 @@ var gitblog = function(config) {
                     }
                 });
             } else {
-                avatar.innerHTML = '<a class="gitment-editor-avatar" id="gitment-avatar" title="login with GitHub">' + '<img src="images/gitment-github-icon.svg" class="gitment-github-icon">' + '</a></div>';
+                avatar.innerHTML = '<a class="gitment-editor-avatar" id="gitment-avatar" title="login with GitHub">' + '<img src="images/gitment-github-icon.svg" class="gitment-github-icon" style="width:44px">' + '</a></div>';
                 document.getElementById('gitment-avatar').onclick = function() {
                     comment.log();
                 }
@@ -616,6 +595,17 @@ var gitblog = function(config) {
     }
 
     Issue.prototype = {
+        getTags: function() {
+            $.ajax({
+                type: 'get',
+                url: 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/labels',
+                success: function(data) {
+                    for (var i in data) {
+                        document.getElementById('tags').innerHTML += '<a href="issue_per_label.html?label=' + data[i].name + '">' + data[i].name + '</a>';
+                    }
+                },
+            });
+        },
         addItem: function(data) {
             document.getElementById('issue-list').innerHTML = '';
             for (var i in data) {
@@ -679,6 +669,7 @@ var gitblog = function(config) {
             }
             this.page.getNum(this.issue_url);
             this.show(this.issue_perpage_url);
+            this.getTags();
         },
         search: function(search) {
             search = encodeURI(search);
