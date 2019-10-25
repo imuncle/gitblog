@@ -1,4 +1,4 @@
-﻿# gitblog
+# gitblog
 这是一个极轻量级的，基于git issue的个人博客模板，非常适合于想在GitHub pages上搭建个人博客的人。
 
 [示例页面](https://imuncle.github.io/gitblog)
@@ -95,7 +95,7 @@ client_secret|填写你申请OAuth APP时拿到的client_secret
 title|填写你的个人网站的标题
 instruction|填写你的个人网站的简介
 server_link|填写你的服务端地址，若没有服务器可填写'http://119.23.8.25/gh-oauth-server.php'
-pin_links|填写需要固定在右侧菜单中的显示名称和对应的issue号/任意链接
+menu|填写右侧菜单中的名称和链接
 friends|填写你的网站的友链，若没有则不填写
 icons|填写网站页脚的图标信息，若没有则不填写
 
