@@ -1,4 +1,4 @@
-﻿# gitblog
+# gitblog
 This is a very small personal blog template bsaed on git issues for anyone who wants to build a personal blog on GitHub pages.
 
 [Demo page](https://imuncle.github.io/gitblog)
@@ -83,7 +83,7 @@ client_secret|Fill in the "client secret" you got when applying for OAuth APP
 title|Fill in the title of your personal website
 instruction|Fill in the profile of your website
 server_link|Fill in your server address, if there is no server to fill in 'http://119.23.8.25/gh-oauth-server.php'
-pin_links|Fill in the title and the corresponding issue_id/any URL that need to be fixed in the menu
+menu|Fill in the names and links in the menu on the right
 friends|Fill in the friendship chain of your website (optional)
 icons|Fill in the informations of the icons that you want to show at the bottom (optional)
 
