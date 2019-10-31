@@ -13,7 +13,7 @@
     },
     "icons": {
         "Github" : {
-            "icon_src" : "images/myself.jpg",
+            "icon_src" : "images/avatar.jpg",
             "href" : "https://github.com/imuncle/gitblog",
             "hidden_img" : null,
             "width" : 0
