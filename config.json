@@ -10,7 +10,7 @@
         "首页":"./"
         "随笔":"issue_per_label.html?label=suibi",
         "絮叨":"issue_per_label.html?label=xudao",
-        "关于我": "content.html?id=41"
+        "关于我": "content.html?id=1"
     },
     "friends": {
         "imuncle" : "https://imuncle.github.io"
