@@ -1,4 +1,4 @@
-# gitblog
+# 稳健的取经少年
 这是唯安的个人博客，基于git issue的博客模板，非常适合于想在GitHub pages上搭建个人博客的人。
 
 [访问地址](https://vaeann.github.io/)
