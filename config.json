@@ -7,7 +7,7 @@
     "instruction": "委委佗佗，如山如河。",
     "server_link": "http://119.23.8.25/gh-oauth-server.php",
     "menu": {
-        "首页":"./"
+        "首页":"./",
         "随笔":"issue_per_label.html?label=suibi",
         "絮叨":"issue_per_label.html?label=xudao",
         "关于我": "content.html?id=1"
