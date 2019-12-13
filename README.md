@@ -13,6 +13,7 @@
 - [x] 文章搜索功能
 - [x] 文章、评论点赞功能（不能取消点赞 :stuck_out_tongue_winking_eye:
 - [x] 博客API接口，可输出`json`格式信息，方便用户进行开发客户端等操作。具体接口使用见说明底部。
+- [x] 根据creator筛选issue，暂不支持多人筛选
 
 博客本身没有发表文章的接口，而是在GitHub的issue页面直接new issue。
 
@@ -51,7 +52,11 @@ git clone "https:/github.com/imuncle/gitblog"
     "client_secret": "your client_secret here",
     "title": "add your title",
     "instruction": "add your instruction",
-    "server_link": "http://119.23.8.25/gh-oauth-server.php",
+	"server_link": "http://119.23.8.25/gh-oauth-server.php",
+	"filter": {
+        "creator": "all",	//@param: "all" or a username(eg. "imuncle")
+        "state": "open"		//@param: "open", "close", "all"
+    },
     "menu": {
         //add your menu items and URL here
         //example:
@@ -95,6 +100,7 @@ client_secret|填写你申请OAuth APP时拿到的client_secret
 title|填写你的个人网站的标题
 instruction|填写你的个人网站的简介
 server_link|填写你的服务端地址，若没有服务器可填写'http://119.23.8.25/gh-oauth-server.php'
+filter|填写issue筛选规则，可根据creator和issue state筛选
 menu|填写右侧菜单中的名称和链接
 friends|填写你的网站的友链，若没有则不填写
 icons|填写网站页脚的图标信息，若没有则不填写

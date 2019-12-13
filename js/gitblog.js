@@ -197,11 +197,9 @@ var gitblog = function(config) {
                 url: request_url,
                 success: function(data) {
                     if (self.options.label != null && self.options.label != undefined) {
-                        if (self.options.q != null && self.options.q != undefined) {
-                            page.itemNum = data.total_count;
-                        } else {
-                            page.itemNum = data.length;
-                        }
+                        page.itemNum = data.length;
+                    } else if(self.options.q != null && self.options.q != undefined) {
+                        page.itemNum = data.total_count;
                     } else if (self.options.id != null && self.options.id != undefined) {
                         page.itemNum = data.length;
                         document.getElementById('comments-num').innerHTML = page.itemNum;
@@ -591,6 +589,9 @@ var gitblog = function(config) {
         this.issue_url = '';
         this.issue_perpage_url = '';
         this.issue_search_url = '';
+        this.author = '';
+        this.creator = '',
+        this.state = '';
         this.page = new Pages();
     }
 
@@ -638,23 +639,48 @@ var gitblog = function(config) {
                             issue.addItem(data.items);
                         }
                         var html = document.getElementById('issue-list').innerHTML;
-                        var newHtml = html.replaceAll(self.options.q, '<font style="background-color:yellow;">' + self.options.q + '</font>');
+                        var newHtml;
+                        if(self.options.q != '')
+                            newHtml = html.replaceAll(self.options.q, '<font style="background-color:yellow;">' + self.options.q + '</font>');
+                        else
+                            newHtml = html;
                         document.getElementById('issue-list').innerHTML = newHtml;
                     }
                 }
             });
         },
         init: function() {
+            if(config.filter.creator != undefined && config.filter.creator != null) {
+                if(config.filter.creator == 'all') {
+                    this.author = '';
+                    this.creator = '';
+                } else {
+                    var authors= new Array();
+                    authors = config.filter.creator.split(",");
+                    for(var i in authors) {
+                        this.author += 'author:' + authors[i] + '+';
+                        this.creator += 'creator=' + authors[i] + '&';
+                    }
+                }
+            } else {
+                this.author = '';
+                this.creator = '';
+            }
+            if(config.filter.state != undefined && config.filter.state != null) {
+                this.state = config.filter.state;
+            } else {
+                this.state = 'all';
+            }
             if (self.options.label == undefined) {
                 if (self.options.q == undefined) {
                     this.issue_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo;
-                    this.issue_perpage_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?creator=' + config.name + '&';
+                    this.issue_perpage_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?' + this.creator + 'state=' + this.state + '&';
                 } else {
                     this.search(self.options.q);
                 }
             } else {
-                this.issue_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?labels=' + self.options.label;
-                this.issue_perpage_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?creator=' + config.name + '&labels=' + self.options.label + '&';
+                this.issue_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?' + this.creator + 'labels=' + self.options.label + '&state=' + this.state;
+                this.issue_perpage_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?' + this.creator + 'labels=' + self.options.label + '&state=' + this.state + '&';
                 document.getElementById('title').innerHTML = self.options.label;
                 $.ajax({
                     type: 'get',
@@ -673,14 +699,25 @@ var gitblog = function(config) {
         },
         search: function(search) {
             search = encodeURI(search);
-            this.issue_url = 'https://api.github.com/search/issues?q=' + search + ' author:' + config.name + '+in:title,body';
-            this.issue_perpage_url = 'https://api.github.com/search/issues?q=' + search + ' author:' + config.name + '+in:title,body&';
+            this.issue_url = 'https://api.github.com/search/issues?q=' + search + ' ' + this.author + 'in:title,body+repo:' + config.name + '/' + config.repo + '+state:' + this.state;
+            this.issue_perpage_url = 'https://api.github.com/search/issues?q=' + search + ' ' + this.author + 'in:title,body+repo:' + config.name + '/' + config.repo + '+state:' + this.state + '&';
         }
     }
 
     var Buttons = function() {}
 
     Buttons.prototype = {
+        getByClass: function(Parent, Class){
+            var result=[];
+            var ele=Parent.getElementsByTagName('*');
+            for(var i=0;i<ele.length;i++){
+                if(ele[i].className==Class)
+                {
+                    result.push(ele[i]);
+                }
+            }
+            return result;
+        },
         init: function() {
             $('.navi-button').click(function() {
                 if ($('.main').css("transform") == "matrix(1, 0, 0, 1, 0, 0)") {
@@ -688,21 +725,17 @@ var gitblog = function(config) {
                     $('.main-navication span').css("opacity", "1");
                     $('.main-navication').css("opacity", "1");
                     $('.main-navication span').css("transform", "translateX(-10px)");
-                    $('.navi-button').css("transform", "translateX(-150px)");
-                    $('.Totop').css("transform", "translateX(-150px)");
-                    $('.search').css("transform", "translateX(-150px)");
-                    $('.search-input').css("transform", "translateX(-150px)");
-                } else {
+                }
+            });
+
+            this.getByClass(document.getElementsByTagName("body")[0], "main")[0].addEventListener("mousedown",function(){
+                if($('.main').css("transform") != "matrix(1, 0, 0, 1, 0, 0)") {
                     $('.main').css("transform", "translateX(0)");
                     $('.main-navication span').css("opacity", "0");
                     $('.main-navication').css("opacity", "0");
                     $('.main-navication span').css("transform", "translateX(-50px)");
-                    $('.navi-button').css("transform", "translateX(0px)");
-                    $('.Totop').css("transform", "translateX(0px)");
-                    $('.search').css("transform", "translateX(0px)");
-                    $('.search-input').css("transform", "translateX(0px)");
                 }
-            });
+            },false)
 
             $('.Totop').click(function() {
                 $('html,body').animate({

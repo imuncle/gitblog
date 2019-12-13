@@ -12,6 +12,7 @@ This is a very small personal blog template bsaed on git issues for anyone who w
 - [x] Search for aticle
 - [x] Like an article or comment
 - [x] API. It can output 'json' format information. Using methods are at the bottom of README.
+- [x] Issue Filter. You can filter your issues by creator or issue state (open or close).
 
 You can publish your article in Github issues page, just click 'New issue'.
 
@@ -39,7 +40,11 @@ In **config.json**:
     "client_secret": "your client_secret here",
     "title": "add your title",
     "instruction": "add your instruction",
-    "server_link": "http://119.23.8.25/gh-oauth-server.php",
+	"server_link": "http://119.23.8.25/gh-oauth-server.php",
+	"filter": {
+        "creator": "all",	//@param: "all" or a username(eg. "imuncle")
+        "state": "open"		//@param: "open", "close", "all"
+    },
     "menu": {
         //add your menu items and URL here
 		//example:
@@ -83,6 +88,7 @@ client_secret|Fill in the "client secret" you got when applying for OAuth APP
 title|Fill in the title of your personal website
 instruction|Fill in the profile of your website
 server_link|Fill in your server address, if there is no server to fill in 'http://119.23.8.25/gh-oauth-server.php'
+filter|Fill in the issue filter rule. You can filter your issues by creator or issue state (open or close).
 menu|Fill in the names and links in the menu on the right
 friends|Fill in the friendship chain of your website (optional)
 icons|Fill in the informations of the icons that you want to show at the bottom (optional)
