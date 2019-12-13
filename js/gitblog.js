@@ -729,6 +729,10 @@ var gitblog = function(config) {
                     $('.main-navication span').css("opacity", "1");
                     $('.main-navication').css("opacity", "1");
                     $('.main-navication span').css("transform", "translateX(-10px)");
+                    $('.navi-button').css("transform", "translateX(-150px)");
+                    $('.Totop').css("transform", "translateX(-150px)");
+                    $('.search').css("transform", "translateX(-150px)");
+                    $('.search-input').css("transform", "translateX(-150px)");
                 }
             });
 
@@ -738,6 +742,10 @@ var gitblog = function(config) {
                     $('.main-navication span').css("opacity", "0");
                     $('.main-navication').css("opacity", "0");
                     $('.main-navication span').css("transform", "translateX(-50px)");
+                    $('.navi-button').css("transform", "translateX(0px)");
+                    $('.Totop').css("transform", "translateX(0px)");
+                    $('.search').css("transform", "translateX(0px)");
+                    $('.search-input').css("transform", "translateX(0px)");
                 }
             },false);
 
