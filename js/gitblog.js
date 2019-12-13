@@ -252,6 +252,10 @@ var gitblog = function(config) {
                     $('#page' + i).click(function() {
                         window.location.href = "?id=" + self.options.id + "&page=" + this.innerHTML;
                     });
+                } else if(self.options.q != undefined) {
+                    $('#page' + i).click(function() {
+                        window.location.href = "?q=" + self.options.q + "&page=" + this.innerHTML;
+                    });
                 } else {
                     $('#page' + i).click(function() {
                         window.location.href = "?page=" + this.innerHTML;
@@ -735,7 +739,7 @@ var gitblog = function(config) {
                     $('.main-navication').css("opacity", "0");
                     $('.main-navication span').css("transform", "translateX(-50px)");
                 }
-            },false)
+            },false);
 
             $('.Totop').click(function() {
                 $('html,body').animate({
