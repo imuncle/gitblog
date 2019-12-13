@@ -12,7 +12,7 @@ This is a very small personal blog template bsaed on git issues for anyone who w
 - [x] Search for aticle
 - [x] Like an article or comment
 - [x] API. It can output 'json' format information. Using methods are at the bottom of README.
-- [x] Issue Filter. You can filter your issues by creator or issue state (open or close).
+- [x] Issue Filter. You can filter your issues by creator or issue state (open or close). Multi-creator filtering is currently not supported.
 
 You can publish your article in Github issues page, just click 'New issue'.
 
@@ -40,8 +40,8 @@ In **config.json**:
     "client_secret": "your client_secret here",
     "title": "add your title",
     "instruction": "add your instruction",
-	"server_link": "http://119.23.8.25/gh-oauth-server.php",
-	"filter": {
+    "server_link": "http://119.23.8.25/gh-oauth-server.php",
+    "filter": {
         "creator": "all",	//@param: "all" or a username(eg. "imuncle")
         "state": "open"		//@param: "open", "close", "all"
     },

@@ -13,7 +13,7 @@
 - [x] 文章搜索功能
 - [x] 文章、评论点赞功能（不能取消点赞 :stuck_out_tongue_winking_eye:
 - [x] 博客API接口，可输出`json`格式信息，方便用户进行开发客户端等操作。具体接口使用见说明底部。
-- [x] 根据creator筛选issue，暂不支持多人筛选
+- [x] 可根据文章作者和文章状态(close或open)筛选文章，暂不支持多人筛选
 
 博客本身没有发表文章的接口，而是在GitHub的issue页面直接new issue。
 
@@ -52,8 +52,8 @@ git clone "https:/github.com/imuncle/gitblog"
     "client_secret": "your client_secret here",
     "title": "add your title",
     "instruction": "add your instruction",
-	"server_link": "http://119.23.8.25/gh-oauth-server.php",
-	"filter": {
+    "server_link": "http://119.23.8.25/gh-oauth-server.php",
+    "filter": {
         "creator": "all",	//@param: "all" or a username(eg. "imuncle")
         "state": "open"		//@param: "open", "close", "all"
     },
