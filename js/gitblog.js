@@ -326,7 +326,7 @@ var gitblog = function(config) {
                 type: "post",
                 url: request_url,
                 headers: {
-                    Authorization: 'token ' + window.localStorage.access_token,
+                    Authorization: 'Basic ' + window.localStorage.authorize,
                     Accept: 'application/vnd.github.squirrel-girl-preview+json'
                 },
                 data: JSON.stringify({
@@ -391,12 +391,11 @@ var gitblog = function(config) {
         send: function() {
             var comment = this;
             var input = document.getElementById('comment-input').value;
-            var access_token = window.localStorage.access_token;
             $.ajax({
                 type: "post",
                 url: 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues/' + self.options.id + '/comments',
                 headers: {
-                    Authorization: 'token ' + access_token,
+                    Authorization: 'Basic ' + window.localStorage.authorize,
                     Accept: 'application/vnd.github.squirrel-girl-preview, application/vnd.github.html+json',
                     'Content-Type': 'application/json'
                 },
@@ -487,6 +486,7 @@ var gitblog = function(config) {
                         window.localStorage.setItem('user_url', data.html_url);
                         window.localStorage.setItem('name', data.login);
                         avatar.innerHTML = '<a class="gitment-comment-avatar" href=' + window.localStorage.user_url + ' target="_blank">' + '<img class="gitment-comment-avatar-img" src=' + window.localStorage.user_avatar_url + '></a>';
+                        window.localStorage.setItem('authorize', btoa(data.login + ':' + window.localStorage.access_token));
                     },
                     error: function() {
                         console.log("用户信息过期，退出登录状态");
