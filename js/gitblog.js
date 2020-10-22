@@ -480,7 +480,11 @@ var gitblog = function(config) {
                 $.ajax({
                     type: "get",
                     async: false,
-                    url: 'https://api.github.com/user?access_token=' + window.localStorage.access_token,
+                    headers: {
+                        Authorization: 'token ' + window.localStorage.access_token,
+                        Accept: 'application/vnd.github.squirrel-girl-preview+json'
+                    },
+                    url: 'https://api.github.com/user',
                     success: function(data) {
                         window.localStorage.setItem('user_avatar_url', data.avatar_url);
                         window.localStorage.setItem('user_url', data.html_url);
