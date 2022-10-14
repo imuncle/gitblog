@@ -87,7 +87,7 @@ client_id|Fill in the "client id" you got when you applied for OAuth APP
 client_secret|Fill in the "client secret" you got when applying for OAuth APP
 title|Fill in the title of your personal website
 instruction|Fill in the profile of your website
-server_link|Fill in your server address, if there is no server to fill in 'http://119.23.8.25/gh-oauth-server.php'
+server_link|Fill in your server address
 filter|Fill in the issue filter rule. You can filter your issues by creator or issue state (open or close).
 menu|Fill in the names and links in the menu on the right
 friends|Fill in the friendship chain of your website (optional)
