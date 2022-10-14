@@ -99,7 +99,7 @@ client_id|填写你申请OAuth APP时拿到的client_id
 client_secret|填写你申请OAuth APP时拿到的client_secret
 title|填写你的个人网站的标题
 instruction|填写你的个人网站的简介
-server_link|填写你的服务端地址，若没有服务器可填写'http://119.23.8.25/gh-oauth-server.php'
+server_link|填写你的服务端地址，~~若没有服务器可填写`http://119.23.8.25/gh-oauth-server.php`~~ 该服务器已停用
 filter|填写issue筛选规则，可根据creator和issue state筛选
 menu|填写右侧菜单中的名称和链接
 friends|填写你的网站的友链，若没有则不填写
