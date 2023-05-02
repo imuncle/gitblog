@@ -1,10 +1,10 @@
 {
     "name": "imuncle",
-    "repo": "gitblog",
-    "client_id": "4148cca0f91e524d1a42",
-    "client_secret": "637c2c993cccf79c51a0a215f538932edfdcb9b0",
-    "title": "Gitblog",
-    "instruction": "基于GitHub issue的个人博客模板",
+    "repo": "TextBlog.github.io",
+    "client_id": "5e44ea24941e5501eefc",
+    "client_secret": "07b37750e76fa188bb05fb7047afd8070dd5df8c",
+    "title": "Text___的个人博客",
+    "instruction": "平时随便写写~~~",
     "server_link": "http://119.23.8.25/gh-oauth-server.php",
     "filter": {
         "creator": "all",
@@ -14,7 +14,7 @@
         "首页":"./"
     },
     "friends": {
-        "imuncle" : "https://imuncle.github.io"
+        "" : ""
     },
     "icons": {
         "Github" : {
