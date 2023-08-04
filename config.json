@@ -13,9 +13,8 @@
     "menu": {
         
         "首页":"./",
-       
         "AI":"issue_per_label.html?label=ai",
-        
+ 
         
     },
     "friends": {
@@ -28,11 +27,6 @@
             "hidden_img" : null,
             "width" : 0
         },
-        "Wechart": {
-            "icon_src": "images/wechart.svg",
-            "href": null,
-            "hidden_img": "images/wechart-qrcode.jpg",
-            "width": 130
-        }
+       
     }
 }
