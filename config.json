@@ -13,11 +13,9 @@
     "menu": {
         
         "首页":"./",
-        "数理科学":"issue_per_label.html?label=math",
-        "开发者":"issue_per_label.html?label=dev",
+       
         "AI":"issue_per_label.html?label=ai",
-        "其他":"issue_per_label.html?label=other",
-        "灵感想法":"https://wcode-wzx.github.io/timeline"
+        
         
     },
     "friends": {
