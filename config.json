@@ -11,11 +11,7 @@
         "state": "open"
     },
     "menu": {
-        
-        "首页":"./",
-        "AI":"issue_per_label.html?label=ai",
- 
-        
+        "首页":"./"
     },
     "friends": {
         "imuncle" : "https://imuncle.github.io"
@@ -23,10 +19,10 @@
     "icons": {
         "Github" : {
             "icon_src" : "images/github.svg",
-            "href" : "https://github.com/wcode-wzx/wcode-wzx.github.io",
+            "href" : "https://github.com/imuncle/gitblog",
             "hidden_img" : null,
             "width" : 0
-        },
-       
+        }
     }
 }
+
