@@ -3,15 +3,21 @@
     "repo": "wcode-wzx.github.io",
     "client_id": "07d04170cd3eb57278b4",
     "client_secret": "3b4a9d53640fb3818e692b688d754bdeed3cd156",
-    "title": "Gitblog",
-    "instruction": "基于GitHub issue的个人博客模板",
-    "server_link": "http://119.23.8.25/gh-oauth-server.php",
+    "title": "Wcode",
+    "instruction": "算法工程师，编程爱好者一枚。",
+    "server_link": "",
     "filter": {
         "creator": "all",
         "state": "open"
     },
     "menu": {
-        "首页":"./"
+        
+        "首页":"./",
+        "数理科学":"issue_per_label.html?label=math",
+        "开发者":"issue_per_label.html?label=dev",
+        "AI":"issue_per_label.html?label=ai",
+        "其他":"issue_per_label.html?label=other",
+        "灵感想法":"https://wcode-wzx.github.io/timeline"
     },
     "friends": {
         "imuncle" : "https://imuncle.github.io"
@@ -19,9 +25,15 @@
     "icons": {
         "Github" : {
             "icon_src" : "images/github.svg",
-            "href" : "https://github.com/imuncle/gitblog",
+            "href" : "https://github.com/wcode-wzx/wcode-wzx.github.io",
             "hidden_img" : null,
             "width" : 0
-        }
+        },
+        "Wechart": {
+            "icon_src": "images/wechart.svg",
+            "href": null,
+            "hidden_img": "images/wechart-qrcode.jpg",
+            "width": 130
+        },
     }
 }
